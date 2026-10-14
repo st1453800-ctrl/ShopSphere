@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact ShopSphere customer support for order, product, shipping, payment and return assistance.">
+  <meta name="theme-color" content="#2563eb">
+  <title>Contact Us | ShopSphere</title>
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --surface: #ffffff;
+      --background: #f8fafc;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --error-bg: #fee2e2;
+      --error-text: #991b1b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--background);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    a:focus-visible, button:focus-visible,
+    input:focus-visible, select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    .announcement {
+      padding: 9px 16px;
+      background: #111827;
+      color: #fff;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    header { background: var(--surface); border-bottom: 1px solid var(--border); }
+
+    .logo { font-size: 27px; font-weight: 800; letter-spacing: -1px; }
+    .logo span { color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover, .breadcrumb a:hover, footer a:hover {
+      color: var(--primary);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+
+    .button:hover { background: var(--primary-dark); }
+    .button:disabled { opacity: .65; cursor: not-allowed; }
+
+    .breadcrumb {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      padding: 62px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #eff6ff, #f8fafc);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 13px;
+      border-radius: 30px;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin-bottom: 14px;
+      font-size: clamp(32px, 5vw, 46px);
+      line-height: 1.2;
+      letter-spacing: -1.3px;
+    }
+
+    .hero p {
+      max-width: 610px;
+      margin: auto;
+      color: var(--muted);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: auto;
+      padding: 48px 24px 70px;
+    }
+
+    .response-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 26px;
+      padding: 16px 18px;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: #1e40af;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: .85fr 1.35fr;
+      align-items: start;
+      gap: 26px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 8px 30px rgba(15, 23, 42, .04);
+    }
+
+    .card h2 { margin-bottom: 8px; font-size: 23px; letter-spacing: -.5px; }
+    .muted { color: var(--muted); }
+    .description { margin-bottom: 22px; color: var(--muted); font-size: 14px; }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 17px 0;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    .info-item:last-of-type { border-bottom: 0; }
+
+    .info-icon {
+      display: grid;
+      flex: 0 0 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: 12px;
+      background: #eff6ff;
+      font-size: 20px;
+    }
+
+    .info-item h3 { margin-bottom: 3px; font-size: 15px; }
+    .info-item p, .info-item a { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+    .info-item a:hover { color: var(--primary); }
+
+    .note {
+      margin-top: 18px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--background);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .note strong { color: var(--text); }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+    .full { grid-column: 1 / -1; }
+
+    label { font-size: 13px; font-weight: 700; }
+    .required { color: #dc2626; }
+
+    input, select, textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 12px 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+
+    textarea { min-height: 145px; resize: vertical; }
+
+    .field-help { color: var(--muted); font-size: 12px; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .checkbox-row input { width: auto; margin-top: 5px; }
+    .checkbox-row a { color: var(--primary); text-decoration: underline; }
+
+    .submit-button { width: 100%; margin-top: 20px; }
+
+    .form-message {
+      display: none;
+      margin-top: 17px;
+      padding: 13px 15px;
+      border-radius: 9px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .form-message.show { display: block; }
+    .form-message.success { background: var(--success-bg); color: var(--success-text); }
+    .form-message.error { background: var(--error-bg); color: var(--error-text); }
+
+    /* Hidden honeypot field for basic automated-spam detection. */
+    .website-field {
+      position: absolute !important;
+      left: -10000px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
+    .help-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 28px;
+      padding: 27px;
+      border-radius: 15px;
+      background: #111827;
+      color: white;
+    }
+
+    .help-banner h2 { margin-bottom: 5px; font-size: 21px; }
+    .help-banner p { color: #cbd5e1; font-size: 14px; }
+    .help-banner .button { flex-shrink: 0; background: white; color: #111827; }
+    .help-banner .button:hover { background: #e5e7eb; }
+
+    footer {
+      padding: 27px 20px;
+      border-top: 1px solid var(--border);
+      background: white;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 17px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 800px) {
+      .navbar { flex-wrap: wrap; }
+      .nav-links { order: 3; width: 100%; gap: 16px; }
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .navbar { padding: 16px; gap: 14px; }
+      .logo { font-size: 24px; }
+      .nav-links { gap: 12px; font-size: 13px; }
+      .navbar > .button { padding: 10px 12px; }
+      .hero { padding: 44px 18px; }
+      .container { padding: 30px 15px 45px; }
+      .card { padding: 21px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .help-banner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    ShopSphere Customer Support — we're here to help.
+  </div>
+
+  <header>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="ShopSphere home">
+        Shop<span>Sphere</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="account.html">Account</a>
+      </div>
+
+      <a class="button" href="#contact-form">Contact Support</a>
+    </nav>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="index.html">Home</a> / <span aria-current="page">Contact Us</span>
+  </nav>
+
+  <section class="hero">
+    <span class="eyebrow">Customer Support</span>
+    <h1>How can we help you?</h1>
+    <p>
+      Questions about an order, product, delivery or payment?
+      Send our team a message and tell us how we can assist.
+    </p>
+  </section>
+
+  <main class="container">
+    <div class="response-banner">
+      <span aria-hidden="true">ℹ️</span>
+      <div>
+        <strong>Need help with an order?</strong>
+        Include your order reference when submitting your enquiry.
+        Our published response target should be added here once your support
+        team has confirmed it.
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="card" aria-labelledby="support-heading">
+        <h2 id="support-heading">Get in touch</h2>
+        <p class="description">
+          Use the contact form or the official support channels listed here.
+        </p>
+
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">✉️</div>
+          <div>
+            <h3>Email support</h3>
+            <p>Customer enquiries</p>
+            <a href="mailto:support@example.com">support@example.com</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">📞</div>
+          <div>
+            <h3>Phone support</h3>
+            <p>Phone support details have not been configured yet.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">🕒</div>
+          <div>
+            <h3>Support hours</h3>
+            <p>Monday–Saturday</p>
+            <p>10:00 AM–6:00 PM IST (example schedule; confirm before publishing)</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon" aria-hidden="true">📍</div>
+          <div>
+            <h3>Business address</h3>
+            <p>Add your verified business address before publishing.</p>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Order enquiry tip</strong><br>
+          Share only the order reference and information needed to resolve
+          your issue. Never send your password, UPI PIN, card PIN or OTP.
+        </div>
+      </aside>
+
+      <section class="card" id="contact-form" aria-labelledby="form-heading">
+        <h2 id="form-heading">Send us a message</h2>
+        <p class="description">
+          Complete the form below. Fields marked with
+          <span class="required">*</span> are required.
+        </p>
+
+        <form id="contactForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full name <span class="required">*</span></label>
+              <input id="name" name="name" type="text"
+                autocomplete="name" maxlength="100"
+                placeholder="Your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address <span class="required">*</span></label>
+              <input id="email" name="email" type="email"
+                autocomplete="email" maxlength="150"
+                placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone number (optional)</label>
+              <input id="phone" name="phone" type="tel"
+                autocomplete="tel" maxlength="20"
+                placeholder="Your phone number">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Enquiry topic <span class="required">*</span></label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a topic</option>
+                <option value="order">Order enquiry</option>
+                <option value="shipping">Shipping and delivery</option>
+                <option value="return">Returns and refunds</option>
+                <option value="product">Product question</option>
+                <option value="payment">Payment issue</option>
+                <option value="account">Account assistance</option>
+                <option value="technical">Website problem</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="orderNumber">Order reference (optional)</label>
+              <input id="orderNumber" name="orderNumber" type="text"
+                maxlength="100" placeholder="Your order reference">
+              <span class="field-help">Do not enter payment credentials or passwords.</span>
+            </div>
+
+            <div class="form-group full">
+              <label for="message">Your message <span class="required">*</span></label>
+              <textarea id="message" name="message"
+                minlength="10" maxlength="3000" required
+                placeholder="Describe the issue and how we can help."></textarea>
+              <span class="field-help">Please enter between 10 and 3,000 characters.</span>
+            </div>
+
+            <!-- Honeypot: normal users should leave this field empty. -->
+            <div class="website-field" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input id="website" name="website" type="text"
+                tabindex="-1" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input id="privacyConsent" name="privacyConsent"
+              type="checkbox" required>
+            <label for="privacyConsent">
+              I have read the <a href="privacy-policy.html">Privacy Policy</a>
+              and understand that my details will be used to respond to this enquiry.
+            </label>
+          </div>
+
+          <button class="button submit-button" id="submitButton" type="submit">
+            <span id="buttonText">Send Message →</span>
+          </button>
+
+          <div id="formMessage" class="form-message"
+            role="status" aria-live="polite" tabindex="-1"></div>
+        </form>
+      </section>
+    </div>
+
+    <section class="help-banner">
+      <div>
+        <h2>Looking for a quick answer?</h2>
+        <p>Visit our help pages for common questions and order assistance.</p>
+      </div>
+      <a class="button" href="help-center.html">Visit Help Center →</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ShopSphere. All rights reserved.</p>
+    <nav class="footer-links" aria-label="Customer service links">
+      <a href="help-center.html">Help Center</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="returns.html">Returns & Refunds</a>
+      <a href="track-order.html">Track Order</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </footer>
+
+  <script>
+    "use strict";
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("contactForm");
+    const submitButton = document.getElementById("submitButton");
+    const buttonText = document.getElementById("buttonText");
+    const formMessage = document.getElementById("formMessage");
+
+    function showMessage(type, message) {
+      formMessage.className = "form-message show " + type;
+      formMessage.textContent = message;
+      formMessage.focus();
+    }
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        subject: document.getElementById("subject").value,
+        orderNumber: document.getElementById("orderNumber").value.trim(),
+        message: document.getElementById("message").value.trim(),
+        website: document.getElementById("website").value
+      };
+
+      if (data.name.length < 2 || data.message.length < 10) {
+        showMessage("error", "Please check your name and message before submitting.");
+        return;
+      }
+
+      submitButton.disabled = true;
+      buttonText.textContent = "Submitting...";
+      formMessage.className = "form-message";
+      formMessage.textContent = "";
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || result.success !== true) {
+          if (response.status === 429) {
+            throw new Error("Too many requests. Please wait before trying again.");
+          }
+          throw new Error(result.message || "Your enquiry could not be submitted.");
+        }
+
+        form.reset();
+
+        const reference = result.reference
+          ? " Your reference is " + result.reference + "."
+          : "";
+
+        showMessage(
+          "success",
+          (result.message || "Your enquiry was saved successfully.") + reference
+        );
+      } catch (error) {
+        showMessage(
+          "error",
+          error.message ||
+            "Unable to connect to customer support. Please try again later."
+        );
+      } finally {
+        submitButton.disabled = false;
+        buttonText.textContent = "Send Message →";
+      }
+    });
+  </script>
+</body>
+</html>
