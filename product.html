@@ -1,293 +1,401 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog & Fashion Subcategories - ShopSphere</title>
-    <meta name="description" content="Browse and filter electronics, fashion t-shirts, pants, shoes, and gadgets on ShopSphere.">
-    <!-- FontAwesome Icons -->
+    <title>Products | ShopSphere</title>
+    <meta name="description" content="Explore electronics, fashion, appliances and mobile phones at ShopSphere.">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
-            --primary-blue: #2874f0;
-            --secondary-orange: #ff9f00;
-            --accent-red: #fb641b;
-            --success-green: #388e3c;
-            --bg-light: #f1f3f6;
-            --text-dark: #212121;
-            --text-light: #878787;
+            --primary: #2874f0;
+            --primary-dark: #1558c0;
+            --orange: #ff9f00;
+            --green: #218838;
+            --background: #f4f6fa;
+            --text: #212121;
+            --muted: #777;
+            --white: #ffffff;
+            --border: #e5e7eb;
+            --shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        /* Header Styling */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* 1. HEADER AND NAVIGATION */
+
         header {
-            background-color: var(--primary-blue);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            background: var(--white);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar {
+            max-width: 1400px;
+            margin: auto;
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            font-style: italic;
-            cursor: pointer;
-            letter-spacing: 1px;
+            font-size: 27px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
         }
 
         .logo span {
-            color: var(--secondary-orange);
+            color: var(--orange);
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 24px;
         }
 
         .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
         .nav-link:hover {
-            color: var(--secondary-orange);
+            color: var(--primary);
         }
 
-        /* Catalog Layout */
+        /* 2. PAGE INTRODUCTION */
+
+        .page-intro {
+            background: linear-gradient(120deg, #1558c0, #2874f0);
+            color: white;
+            padding: 38px 5%;
+        }
+
+        .intro-content {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .page-intro h1 {
+            font-size: clamp(25px, 4vw, 36px);
+            margin-bottom: 8px;
+        }
+
+        .page-intro p {
+            color: #e5edff;
+            max-width: 650px;
+        }
+
+        /* 3. MAIN CATALOG LAYOUT */
+
         .catalog-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 30px auto;
-            padding: 0 15px;
+            padding: 0 5%;
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 260px minmax(0, 1fr);
             gap: 25px;
+            align-items: start;
         }
 
-        @media(max-width: 768px) {
-            .catalog-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Sidebar Filters */
         .filter-sidebar {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            height: fit-content;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: var(--shadow);
         }
 
         .filter-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        .filter-group {
+            justify-content: space-between;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
             margin-bottom: 20px;
         }
 
-        .filter-group label.group-heading {
-            display: block;
-            font-size: 14px;
+        .filter-title h2 {
+            font-size: 19px;
+        }
+
+        .clear-button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 13px;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-dark);
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .group-heading {
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 13px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
         .checkbox-label {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            margin-bottom: 13px;
             font-size: 14px;
-            margin-bottom: 8px;
             cursor: pointer;
-            color: #444;
-            font-weight: 500;
+        }
+
+        .checkbox-label input {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
         }
 
         .sub-category-box {
-            margin-left: 20px;
-            padding-left: 10px;
-            border-left: 2px solid #e0e0e0;
-            margin-top: 8px;
-            margin-bottom: 12px;
             display: none;
+            margin: 5px 0 15px 12px;
+            padding: 12px 0 1px 13px;
+            border-left: 2px solid #dbe7ff;
         }
 
         .filter-group select {
             width: 100%;
-            padding: 9px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            outline: none;
+            padding: 11px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: white;
+            outline-color: var(--primary);
         }
 
-        /* Catalog Content Area */
+        /* 4. CATALOG HEADER */
+
         .catalog-header {
+            background: white;
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
+            gap: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: var(--shadow);
         }
 
-        /* Product Grid */
+        .catalog-header strong {
+            color: var(--primary);
+        }
+
+        .catalog-subtitle {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* 5. PRODUCT CARDS */
+
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 20px;
         }
 
         .product-card {
             background: white;
-            border-radius: 6px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
+            min-width: 0;
+            transition: transform 0.25s, box-shadow 0.25s;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.11);
+        }
+
+        .image-wrap {
+            position: relative;
+            background: #f8f9fb;
+            overflow: hidden;
         }
 
         .product-image {
+            display: block;
             width: 100%;
-            height: 190px;
+            height: 200px;
             object-fit: cover;
-            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.04);
         }
 
         .product-info {
-            padding: 15px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-category {
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
         }
 
         .product-title {
             font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-dark);
-            cursor: pointer;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .product-title:hover {
-            color: var(--primary-blue);
+            line-height: 1.5;
+            min-height: 45px;
+            margin-bottom: 8px;
         }
 
         .rating-badge {
             display: inline-flex;
             align-items: center;
-            background: var(--success-green);
-            color: white;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            gap: 3px;
+            gap: 5px;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .rating-badge i {
+            color: #f4b400;
         }
 
         .product-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--success-green);
-            margin-bottom: 12px;
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 15px;
         }
 
         .btn-row {
             display: flex;
             gap: 8px;
+            margin-top: auto;
         }
 
         .btn-add-cart {
             flex: 1;
-            background-color: var(--secondary-orange);
-            color: white;
             border: none;
-            padding: 9px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 7px;
+            background: var(--orange);
+            color: #222;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 11px 8px;
+            transition: background 0.2s;
         }
 
         .btn-add-cart:hover {
-            background-color: var(--accent-red);
+            background: #ffb52e;
         }
 
         .btn-wishlist {
-            background: #eee;
-            border: none;
-            padding: 9px 12px;
-            border-radius: 4px;
-            cursor: pointer;
+            width: 42px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 7px;
             color: #555;
         }
 
-        .btn-wishlist:hover {
-            color: var(--accent-red);
+        .btn-wishlist:hover,
+        .btn-wishlist.active {
+            color: #e63946;
+            border-color: #e63946;
         }
 
-        /* Toast Notification */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            color: #aab4c3;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* 6. NOTIFICATION */
+
         #toast-notification {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #212121;
+            bottom: 25px;
+            right: 25px;
+            z-index: 2000;
+            max-width: calc(100% - 40px);
+            background: #202a38;
             color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 9999;
+            padding: 14px 20px;
+            border-radius: 9px;
+            box-shadow: var(--shadow);
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(15px);
             pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
         }
 
         #toast-notification.show {
@@ -296,263 +404,774 @@
         }
 
         #toast-notification i {
-            color: #2ed573;
-            font-size: 18px;
+            color: #54d68b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            margin-top: 40px;
+            background: white;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* 7. RESPONSIVE DESIGN */
+
+        @media (max-width: 1100px) {
+            .product-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .navbar {
+                padding: 13px 4%;
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                font-size: 23px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-link {
+                font-size: 12px;
+            }
+
+            .catalog-container {
+                grid-template-columns: 1fr;
+                padding: 0 4%;
+                margin-top: 20px;
+            }
+
+            .filter-sidebar {
+                padding: 17px;
+            }
+
+            .page-intro {
+                padding: 28px 4%;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .product-image {
+                height: 155px;
+            }
+
+            .product-info {
+                padding: 12px;
+            }
+
+            .product-title {
+                font-size: 13px;
+            }
+
+            .product-price {
+                font-size: 18px;
+            }
+
+            .btn-add-cart {
+                font-size: 11px;
+            }
+
+            .catalog-header {
+                padding: 14px;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .nav-links {
+                gap: 9px;
+            }
+
+            .nav-link {
+                font-size: 11px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 220px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Header Navigation -->
+    <!-- 1. HEADER NAVIGATION -->
+
     <header>
-        <div class="logo" onclick="window.location.href='index.html'">
-            Shop<span>Sphere</span>
-        </div>
-        <div class="nav-links">
-            <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
-            <a class="nav-link" href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
-            <a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
-        </div>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                Shop<span>Sphere</span>
+            </a>
+
+            <div class="nav-links">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                <a class="nav-link" href="wishlist.html">
+                    <i class="fas fa-heart"></i> Wishlist
+                </a>
+
+                <a class="nav-link" href="cart.html">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+            </div>
+        </nav>
     </header>
 
-    <!-- Catalog Container -->
-    <div class="catalog-container">
-        
-        <!-- Sidebar Filters -->
-        <div class="filter-sidebar">
+    <!-- 2. PAGE INTRODUCTION -->
+
+    <section class="page-intro">
+        <div class="intro-content">
+            <h1>Explore Our Collection</h1>
+            <p>
+                Discover quality electronics, fashionable clothing,
+                useful appliances and the latest mobile phones.
+                Find the right product at the right price.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. MAIN CATALOG -->
+
+    <main class="catalog-container">
+
+        <!-- 4. FILTER SIDEBAR -->
+
+        <aside class="filter-sidebar">
+
             <div class="filter-title">
-                <span>Filters</span>
-                <span style="font-size: 12px; color: var(--primary-blue); cursor: pointer;" onclick="resetFilters()">Clear All</span>
+                <h2><i class="fas fa-sliders-h"></i> Filters</h2>
+                <button class="clear-button" type="button"
+                    onclick="resetFilters()">Clear All</button>
             </div>
-            
+
+            <!-- Main categories -->
+
             <div class="filter-group">
-                <label class="group-heading">Categories</label>
-                
+                <span class="group-heading">Categories</span>
+
                 <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets
-                </label>
-                
-                <!-- Fashion Main Category with Sequential Sub-categories -->
-                <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="fashion" id="fashion-checkbox" onchange="toggleFashionSubcategories(); filterProducts();"> Fashion & Apparel
+                    <input type="checkbox" name="cat"
+                        value="electronics"
+                        onchange="filterProducts()">
+                    Electronics & Gadgets
                 </label>
 
-                <!-- Sub-categories List -->
-                <div class="sub-category-box" id="fashion-sub-container">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat"
+                        value="fashion" id="fashion-checkbox"
+                        onchange="toggleFashionSubcategories(); filterProducts()">
+                    Fashion & Apparel
+                </label>
+
+                <!-- Fashion subcategories -->
+
+                <div class="sub-category-box"
+                    id="fashion-sub-container">
+
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts
+                        <input type="checkbox" name="subcat"
+                            value="tshirt" onchange="filterProducts()">
+                        T-Shirts
                     </label>
+
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans
+                        <input type="checkbox" name="subcat"
+                            value="pants" onchange="filterProducts()">
+                        Pants & Jeans
                     </label>
+
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes & Footwear
+                        <input type="checkbox" name="subcat"
+                            value="shoes" onchange="filterProducts()">
+                        Shoes & Footwear
                     </label>
+
                     <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets & Hoodies
+                        <input type="checkbox" name="subcat"
+                            value="jackets" onchange="filterProducts()">
+                        Jackets & Hoodies
                     </label>
                 </div>
 
                 <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="appliances" onchange="filterProducts()"> Home Appliances
+                    <input type="checkbox" name="cat"
+                        value="appliances" onchange="filterProducts()">
+                    Home Appliances
                 </label>
+
                 <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="mobiles" onchange="filterProducts()"> Mobile Phones
+                    <input type="checkbox" name="cat"
+                        value="mobiles" onchange="filterProducts()">
+                    Mobile Phones
                 </label>
             </div>
 
+            <!-- Sorting options -->
+
             <div class="filter-group">
-                <label class="group-heading">Sort By Price</label>
+                <label for="sort-select" class="group-heading">
+                    Sort Products
+                </label>
+
                 <select id="sort-select" onchange="filterProducts()">
-                    <option value="default">Relevance / Popularity</option>
+                    <option value="default">Relevance</option>
                     <option value="low-high">Price: Low to High</option>
                     <option value="high-low">Price: High to Low</option>
                     <option value="rating">Customer Ratings</option>
                 </select>
             </div>
-        </div>
 
-        <!-- Catalog Product Grid Area -->
-        <div>
+        </aside>
+
+        <!-- 5. PRODUCT DISPLAY AREA -->
+
+        <section class="catalog-content">
+
             <div class="catalog-header">
-                <div>Showing <strong id="product-count">0</strong> products available in catalog</div>
-                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Quality Verified</div>
+                <div>
+                    <div>
+                        Showing <strong id="product-count">0</strong>
+                        products
+                    </div>
+                    <div class="catalog-subtitle">
+                        Find something you'll love
+                    </div>
+                </div>
+
+                <div class="catalog-subtitle">
+                    <i class="fas fa-check-circle"></i>
+                    ShopSphere Collection
+                </div>
             </div>
 
             <div class="product-grid" id="catalog-grid">
-                <!-- Dynamically populated via JS -->
+                <!-- Product cards are generated by JavaScript -->
             </div>
-        </div>
 
-    </div>
+        </section>
+    </main>
 
-    <!-- Toast Notification -->
-    <div id="toast-notification">
+    <!-- 6. TOAST NOTIFICATION -->
+
+    <div id="toast-notification" role="status" aria-live="polite">
         <i class="fas fa-check-circle"></i>
         <span id="toast-message">Action completed successfully!</span>
     </div>
 
-    <!-- Catalog Management Logic -->
+    <!-- 7. FOOTER -->
+
+    <footer>
+        <p>&copy; <span id="current-year"></span> ShopSphere.
+            Your shopping destination.</p>
+    </footer>
+
+    <!-- 8. JAVASCRIPT PRODUCT DATABASE AND FUNCTIONS -->
+
     <script>
+        "use strict";
+
+        // PRODUCT DATABASE
+
         const masterProducts = [
-            { id: 1, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, title: "Vintage Mirrorless Camera", category: "electronics", subcat: "none", price: 45999, rating: 4.8, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" },
-            { id: 5, title: "Casual Cotton Graphic T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
-            { id: 6, title: "Classic Slim Fit Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
-            { id: 7, title: "Winter Warm Fleece Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
-            { id: 8, title: "Portable Waterproof Speaker", category: "appliances", subcat: "none", price: 1799, rating: 4.5, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80" },
-            { id: 9, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
+            {
+                id: 1,
+                title: "Minimalist Smart Watch",
+                category: "electronics",
+                subcat: "none",
+                price: 2999,
+                rating: 4.4,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                title: "Wireless Bass Headphones",
+                category: "electronics",
+                subcat: "none",
+                price: 1499,
+                rating: 4.2,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                title: "Pro Athletic Running Shoes",
+                category: "fashion",
+                subcat: "shoes",
+                price: 3499,
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 4,
+                title: "Vintage Mirrorless Camera",
+                category: "electronics",
+                subcat: "none",
+                price: 45999,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 5,
+                title: "Casual Cotton Graphic T-Shirt",
+                category: "fashion",
+                subcat: "tshirt",
+                price: 699,
+                rating: 4.3,
+                image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 6,
+                title: "Classic Slim Fit Denim Jeans",
+                category: "fashion",
+                subcat: "pants",
+                price: 1499,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 7,
+                title: "Winter Warm Fleece Hoodie",
+                category: "fashion",
+                subcat: "jackets",
+                price: 1899,
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 8,
+                title: "Portable Waterproof Speaker",
+                category: "appliances",
+                subcat: "none",
+                price: 1799,
+                rating: 4.5,
+                image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 9,
+                title: "Flagship 5G Smartphone",
+                category: "mobiles",
+                subcat: "none",
+                price: 28999,
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80"
+            }
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // 9. READ CATEGORY AND SEARCH PARAMETERS
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("current-year").textContent =
+                new Date().getFullYear();
+
             const params = new URLSearchParams(window.location.search);
-            const catParam = params.get('category');
-            if(catParam) {
-                const checkboxes = document.querySelectorAll('input[name="cat"]');
-                checkboxes.forEach(cb => {
-                    if(cb.value === catParam) {
-                        cb.checked = true;
-                        if(catParam === 'fashion') {
-                            document.getElementById('fashion-sub-container').style.display = 'block';
-                        }
-                    }
-                });
+            const categoryParam = params.get("category");
+            const searchParam = params.get("search");
+
+            if (categoryParam) {
+                const categoryCheckbox = document.querySelector(
+                    `input[name="cat"][value="${CSS.escape(categoryParam)}"]`
+                );
+
+                if (categoryCheckbox) {
+                    categoryCheckbox.checked = true;
+                }
             }
+
+            if (categoryParam === "fashion") {
+                document.getElementById(
+                    "fashion-sub-container"
+                ).style.display = "block";
+            }
+
+            // Show the category and product name specified in the URL.
+            // Example: products.html?category=electronics&search=headphones
+
+            if (searchParam) {
+                // The filter function reads this parameter directly.
+            }
+
             filterProducts();
         });
 
+        // 10. SHOW OR HIDE FASHION SUBCATEGORIES
+
         function toggleFashionSubcategories() {
-            const fashionCheckbox = document.getElementById('fashion-checkbox');
-            const subContainer = document.getElementById('fashion-sub-container');
+            const fashionCheckbox = document.getElementById(
+                "fashion-checkbox"
+            );
+
+            const subcategoryContainer = document.getElementById(
+                "fashion-sub-container"
+            );
+
             if (fashionCheckbox.checked) {
-                subContainer.style.display = 'block';
+                subcategoryContainer.style.display = "block";
             } else {
-                subContainer.style.display = 'none';
-                // Uncheck subcategories when main category is unchecked
-                document.querySelectorAll('input[name="subcat"]').forEach(sub => sub.checked = false);
+                subcategoryContainer.style.display = "none";
+
+                document.querySelectorAll('input[name="subcat"]')
+                    .forEach(function (checkbox) {
+                        checkbox.checked = false;
+                    });
             }
         }
 
-        
-function filterProducts() {
-    const selectedCategories = Array.from(
-        document.querySelectorAll('input[name="cat"]:checked')
-    ).map(cb => cb.value);
+        // 11. FILTER AND SORT PRODUCTS
 
-    const selectedSubcategories = Array.from(
-        document.querySelectorAll('input[name="subcat"]:checked')
-    ).map(cb => cb.value);
+        function filterProducts() {
+            const selectedCategories = Array.from(
+                document.querySelectorAll('input[name="cat"]:checked')
+            ).map(function (checkbox) {
+                return checkbox.value;
+            });
 
-    const sortVal = document.getElementById('sort-select').value;
+            const selectedSubcategories = Array.from(
+                document.querySelectorAll('input[name="subcat"]:checked')
+            ).map(function (checkbox) {
+                return checkbox.value;
+            });
 
-    // Read the product search term from the URL
-    const params = new URLSearchParams(window.location.search);
-    const searchTerm = (params.get('search') || '')
-        .toLowerCase()
-        .trim();
+            const sortValue = document.getElementById(
+                "sort-select"
+            ).value;
 
-    // Filter the products
-    let filtered = masterProducts.filter(p => {
-        const matchesCategory =
-            selectedCategories.length === 0 ||
-            selectedCategories.includes(p.category);
+            const params = new URLSearchParams(window.location.search);
 
-        const matchesSearch =
-            !searchTerm ||
-            p.title.toLowerCase().includes(searchTerm);
+            const searchTerm = (
+                params.get("search") || ""
+            ).toLowerCase().trim();
 
-        const matchesSubcategory =
-            !selectedCategories.includes('fashion') ||
-            selectedSubcategories.length === 0 ||
-            selectedSubcategories.includes(p.subcat);
+            let filtered = masterProducts.filter(function (product) {
+                const matchesCategory =
+                    selectedCategories.length === 0 ||
+                    selectedCategories.includes(product.category);
 
-        return matchesCategory && matchesSearch && matchesSubcategory;
-    });
+                const matchesSearch =
+                    !searchTerm ||
+                    product.title.toLowerCase().includes(searchTerm);
 
-    // Sort the products
-    if (sortVal === 'low-high') {
-        filtered.sort((a, b) => a.price - b.price);
-    } else if (sortVal === 'high-low') {
-        filtered.sort((a, b) => b.price - a.price);
-    } else if (sortVal === 'rating') {
-        filtered.sort((a, b) => b.rating - a.rating);
-    }
+                const matchesSubcategory =
+                    !selectedCategories.includes("fashion") ||
+                    selectedSubcategories.length === 0 ||
+                    selectedSubcategories.includes(product.subcat);
 
-    // Display the filtered products
-    renderCatalog(filtered);
-}
+                return matchesCategory &&
+                    matchesSearch &&
+                    matchesSubcategory;
+            });
 
+            // Sorting
+
+            if (sortValue === "low-high") {
+                filtered.sort(function (a, b) {
+                    return a.price - b.price;
+                });
+            } else if (sortValue === "high-low") {
+                filtered.sort(function (a, b) {
+                    return b.price - a.price;
+                });
+            } else if (sortValue === "rating") {
+                filtered.sort(function (a, b) {
+                    return b.rating - a.rating;
+                });
+            }
+
+            renderCatalog(filtered);
+        }
+
+        // 12. DISPLAY PRODUCT CARDS
 
         function renderCatalog(products) {
-            const container = document.getElementById('catalog-grid');
-            document.getElementById('product-count').innerText = products.length;
+            const container = document.getElementById("catalog-grid");
 
-            if(products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found matching criteria.</h3><p style="color:#777; font-size:14px;">Try selecting a different sub-category or clearing filters.</p></div>`;
+            document.getElementById("product-count").textContent =
+                products.length;
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No products found</h3>
+                        <p>
+                            Try another category or clear your filters
+                            to see more products.
+                        </p>
+                    </div>
+                `;
                 return;
             }
 
-            let html = '';
-            products.forEach(p => {
-                html += `
-                    <div class="product-card">
-                        <img src="${p.image}" class="product-image" alt="${p.title}" onclick="window.location.href='product-detail.html'">
+            container.innerHTML = products.map(function (product) {
+                const safeTitle = escapeHTML(product.title);
+                const safeImage = escapeHTML(product.image);
+                const categoryName = getCategoryName(product.category);
+
+                const wishlist = getWishlist();
+                const isWishlisted = wishlist.includes(product.title);
+
+                return `
+                    <article class="product-card">
+                        <div class="image-wrap">
+                            <img
+                                src="${safeImage}"
+                                class="product-image"
+                                alt="${safeTitle}"
+                                loading="lazy"
+                            >
+                        </div>
+
                         <div class="product-info">
-                            <div class="product-title" onclick="window.location.href='product-detail.html'">${p.title}</div>
-                            <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
-                            <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
+                            <div class="product-category">
+                                ${categoryName}
+                            </div>
+
+                            <h3 class="product-title">${safeTitle}</h3>
+
+                            <div class="rating-badge">
+                                ${product.rating}
+                                <i class="fas fa-star"></i>
+                                <span>Customer rating</span>
+                            </div>
+
+                            <div class="product-price">
+                                ₹${product.price.toLocaleString("en-IN")}
+                            </div>
+
                             <div class="btn-row">
-                                <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
-                                <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
+                                <button
+                                    type="button"
+                                    class="btn-add-cart"
+                                    data-action="cart"
+                                    data-id="${product.id}"
+                                >
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn-wishlist ${isWishlisted ? "active" : ""}"
+                                    data-action="wishlist"
+                                    data-id="${product.id}"
+                                    aria-label="Add ${safeTitle} to wishlist"
+                                    aria-pressed="${isWishlisted}"
+                                >
+                                    <i class="fas fa-heart"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 `;
-            });
-            container.innerHTML = html;
+            }).join("");
         }
 
+        // 13. CATEGORY LABELS
+
+        function getCategoryName(category) {
+            const categories = {
+                electronics: "Electronics",
+                fashion: "Fashion",
+                appliances: "Home Appliances",
+                mobiles: "Mobile Phones"
+            };
+
+            return categories[category] || "Products";
+        }
+
+        // Escape text before inserting it into HTML.
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, function (character) {
+                const entities = {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;"
+                };
+
+                return entities[character];
+            });
+        }
+
+        // 14. CLEAR ALL FILTERS
+
         function resetFilters() {
-            document.querySelectorAll('input[name="cat"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('input[name="subcat"]').forEach(cb => cb.checked = false);
-            document.getElementById('fashion-sub-container').style.display = 'none';
-            document.getElementById('sort-select').value = 'default';
+            document.querySelectorAll('input[name="cat"]')
+                .forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+
+            document.querySelectorAll('input[name="subcat"]')
+                .forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+
+            document.getElementById(
+                "fashion-sub-container"
+            ).style.display = "none";
+
+            document.getElementById("sort-select").value = "default";
+
+            // Remove URL filters so Clear All really shows every product.
+            window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname
+            );
+
             filterProducts();
         }
 
-        function addToCart(title, price, image) {
-            let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
-            let existing = cart.find(item => item.title === title);
-            if(existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ title, price, image, qty: 1 });
+        // 15. READ AND SAVE CART DATA
+
+        function getCart() {
+            try {
+                const cart = JSON.parse(
+                    localStorage.getItem("shopSphereCart")
+                );
+
+                return Array.isArray(cart) ? cart : [];
+            } catch (error) {
+                return [];
             }
-            localStorage.setItem('shopSphereCart', JSON.stringify(cart));
-            showToast(`"${title}" added to cart!`);
+        }
+
+        function addToCart(title, price, image) {
+            const cart = getCart();
+
+            const existing = cart.find(function (item) {
+                return item.title === title;
+            });
+
+            if (existing) {
+                existing.qty = (Number(existing.qty) || 0) + 1;
+            } else {
+                cart.push({
+                    title: title,
+                    price: price,
+                    image: image,
+                    qty: 1
+                });
+            }
+
+            localStorage.setItem("shopSphereCart", JSON.stringify(cart));
+
+            showToast(title + " added to cart!");
+        }
+
+        // 16. WISHLIST
+
+        function getWishlist() {
+            try {
+                const wishlist = JSON.parse(
+                    localStorage.getItem("shopSphereWishlist")
+                );
+
+                return Array.isArray(wishlist) ? wishlist : [];
+            } catch (error) {
+                return [];
+            }
         }
 
         function toggleWishlist(title) {
-            let wishlist = JSON.parse(localStorage.getItem('shopSphereWishlist')) || [];
-            if(!wishlist.includes(title)) {
-                wishlist.push(title);
-                localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
-                showToast(`"${title}" added to wishlist!`);
+            let wishlist = getWishlist();
+
+            if (wishlist.includes(title)) {
+                wishlist = wishlist.filter(function (item) {
+                    return item !== title;
+                });
+
+                localStorage.setItem(
+                    "shopSphereWishlist",
+                    JSON.stringify(wishlist)
+                );
+
+                showToast(title + " removed from wishlist.");
             } else {
-                showToast(`"${title}" is already in your wishlist.`);
+                wishlist.push(title);
+
+                localStorage.setItem(
+                    "shopSphereWishlist",
+                    JSON.stringify(wishlist)
+                );
+
+                showToast(title + " added to wishlist!");
             }
+
+            filterProducts();
         }
 
+        // 17. PRODUCT BUTTON EVENTS
+
+        document.getElementById("catalog-grid").addEventListener(
+            "click",
+            function (event) {
+                const button = event.target.closest("button[data-action]");
+
+                if (!button) {
+                    return;
+                }
+
+                const productId = Number(button.dataset.id);
+
+                const product = masterProducts.find(function (item) {
+                    return item.id === productId;
+                });
+
+                if (!product) {
+                    return;
+                }
+
+                if (button.dataset.action === "cart") {
+                    addToCart(
+                        product.title,
+                        product.price,
+                        product.image
+                    );
+                } else if (button.dataset.action === "wishlist") {
+                    toggleWishlist(product.title);
+                }
+            }
+        );
+
+        // 18. TOAST NOTIFICATION
+
+        let toastTimer;
+
         function showToast(message) {
-            const toast = document.getElementById('toast-notification');
-            document.getElementById('toast-message').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            const toast = document.getElementById(
+                "toast-notification"
+            );
+
+            document.getElementById("toast-message").textContent =
+                message;
+
+            toast.classList.add("show");
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(function () {
+                toast.classList.remove("show");
+            }, 2500);
         }
     </script>
+
 </body>
 </html>
