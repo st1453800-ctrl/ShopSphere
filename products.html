@@ -1248,139 +1248,99 @@
   </div>
 
   <!-- 2. HEADER -->
-  
-/* ShopSphere: cleaner header refinement */
-.site-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.035);
-}
+  <header class="site-header">
+    <div class="container header-main">
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle"
+        aria-label="Open navigation menu" aria-expanded="false"
+        aria-controls="category-nav">☰</button>
 
-.header-main {
-  gap: 24px;
-  padding-block: 15px;
-}
+      <a href="index.html" class="logo" aria-label="ShopSphere homepage">
+        
+<a href="profile.html">My Profile</a>
 
-.logo {
-  font-size: 1.7rem;
-  white-space: nowrap;
-  letter-spacing: -1px;
-}
+        Shop<span>Sphere</span>
+      </a>
 
-.search-form {
-  border: 1px solid #dfe3eb;
-  background: #f8fafc;
-  border-radius: 10px;
-}
+      <div class="search-wrap">
+        <form class="search-form" id="search-form" role="search">
+          <label class="sr-only" for="site-search">Search products</label>
+          <input id="site-search" type="search"
+            placeholder="Search products, brands and categories..."
+            autocomplete="off">
+         <button type="submit" aria-label="Search">
+  <i data-lucide="search"></i>
+</button>
+        </form>
+        <div class="search-suggestions hidden" id="search-suggestions"
+          role="listbox" aria-label="Search suggestions"></div>
+      </div>
 
-.search-form:focus-within {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.09);
-}
+      <div class="header-actions">
+        <a href="login.html" class="header-action" aria-label="Account">
+          <span class="action-icon">
+  <i data-lucide="user-round"></i>
+</span>
+          <span class="action-label">Account</span>
+        </a>
 
-.search-form input {
-  padding: 13px 15px;
-}
+        <a href="wishlist.html" class="header-action" aria-label="Wishlist">
+         <span class="action-icon">
+  <i data-lucide="heart"></i>
+</span>
+          <span class="count" id="wishlist-count">0</span>
+          <span class="action-label">Wishlist</span>
+        </a>
 
-.search-form button {
-  min-width: 52px;
-  transition: background 0.2s ease;
-}
+        <a href="cart.html" class="header-action" aria-label="Shopping cart">
+         <span class="action-icon">
+  <i data-lucide="shopping-cart"></i>
+</span>
+          <span class="count" id="cart-count">0</span>
+          <span class="action-label">Cart</span>
+        </a>
+      </div>
+    </div>
 
-.header-actions {
-  gap: 22px;
-}
+    <div class="container delivery-strip">
+      📍 Delivery options depend on your location.
+      <a href="contact.html" class="text-link">Need help?</a>
+    </div>
 
-.header-action {
-  min-width: 48px;
-  color: #374151;
-  transition: color 0.2s ease;
-}
+    <!-- 3. CATEGORY NAVIGATION -->
+    <nav class="category-nav" id="category-nav"
+      aria-label="Main navigation">
+      <div class="container nav-inner">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="products.html">All Products</a>
 
-.header-action:hover {
-  color: #4f46e5;
-}
+        <div class="nav-dropdown">
+          <button type="button" aria-expanded="false">Electronics ▾</button>
+          <div class="mega-menu">
+            <a href="products.html?category=electronics">All Electronics</a>
+            <a href="products.html?category=electronics">Headphones</a>
+            <a href="products.html?category=electronics">Smart Devices</a>
+            <a href="products.html?category=electronics">Accessories</a>
+          </div>
+        </div>
 
-.header-action .action-icon {
-  display: grid;
-  place-items: center;
-  font-size: 1.3rem;
-}
+        <div class="nav-dropdown">
+          <button type="button" aria-expanded="false">Fashion ▾</button>
+          <div class="mega-menu">
+            <a href="products.html?category=fashion">All Fashion</a>
+            <a href="products.html?category=fashion">Men's Fashion</a>
+            <a href="products.html?category=fashion">Women's Fashion</a>
+            <a href="products.html?category=fashion">Bags and Accessories</a>
+          </div>
+        </div>
 
-.header-action .action-icon svg,
-.search-form button svg,
-.benefit-icon svg {
-  width: 21px;
-  height: 21px;
-}
-
-.count {
-  right: 0;
-  top: -5px;
-}
-
-.delivery-strip {
-  padding-bottom: 10px;
-  font-size: 0.8rem;
-}
-
-.nav-inner {
-  gap: 25px;
-  min-height: 45px;
-}
-
-.nav-inner > a,
-.nav-dropdown > button {
-  font-size: 0.88rem;
-  white-space: nowrap;
-}
-
-@media (max-width: 1000px) {
-  .header-main {
-    gap: 14px;
-  }
-
-  .header-actions {
-    gap: 13px;
-  }
-
-  .nav-inner {
-    gap: 15px;
-    overflow-x: auto;
-  }
-}
-
-@media (max-width: 700px) {
-  .header-main {
-    gap: 12px;
-    padding-block: 12px;
-  }
-
-  .logo {
-    font-size: 1.4rem;
-  }
-
-  .header-actions {
-    gap: 13px;
-  }
-
-  .header-action {
-    min-width: 28px;
-  }
-
-  .header-action .action-label {
-    display: none;
-  }
-
-  .delivery-strip {
-    display: none;
-  }
-
-  .search-wrap {
-    flex-basis: 100%;
-  }
-}
-
+        <a href="products.html?category=home">Home & Kitchen</a>
+        <a href="products.html?category=beauty">Beauty</a>
+        <a href="products.html?category=sports">Sports</a>
+        <a href="products.html?category=books">Books</a>
+        <a href="#deals">Deals</a>
+      </div>
+    </nav>
+  </header>
 
   <main id="main-content">
     <!-- 4. HERO BANNER -->
