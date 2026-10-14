@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - ShopSphere 2026</title>
+    <title>Shopping Cart - ShopSphere</title>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,26 +18,24 @@
             --border-color: #e0e0e0;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-light);
             color: var(--text-dark);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            padding-bottom: 70px;
+            padding-bottom: 60px;
         }
 
-        /* Header Navigation */
+        /* Top Header */
         header {
             background-color: var(--primary-blue);
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 4%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 14px 5%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -50,51 +48,38 @@
             cursor: pointer;
         }
 
-        .logo span {
-            color: var(--secondary-orange);
-        }
+        .logo span { color: var(--secondary-orange); }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            margin-left: 20px;
-            transition: color 0.2s;
-        }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-link { color: white; text-decoration: none; font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .nav-link:hover { color: var(--secondary-orange); }
 
-        .nav-links a:hover {
-            color: var(--secondary-orange);
-        }
-
-        /* Full Width Container */
-        .cart-main-container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 25px auto;
+        /* Main Page Layout */
+        .cart-wrapper {
+            max-width: 1250px;
+            margin: 30px auto;
             padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 25px;
         }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @media(max-width: 900px) {
+            .cart-wrapper { grid-template-columns: 1fr; }
         }
 
-        /* Free Delivery Progress Banner */
-        .delivery-progress-banner {
-            background: #fff;
+        /* Free Delivery Banner */
+        .delivery-banner {
+            background: white;
             border-radius: 8px;
             padding: 16px 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             border-left: 5px solid var(--secondary-orange);
+            grid-column: 1 / -1;
         }
 
-        .progress-bar-container {
+        .progress-track {
             background: #e0e0e0;
             border-radius: 10px;
             height: 8px;
@@ -103,7 +88,7 @@
             overflow: hidden;
         }
 
-        .progress-fill {
+        .progress-bar-fill {
             background: var(--success-green);
             height: 100%;
             width: 0%;
@@ -111,101 +96,163 @@
             transition: width 0.4s ease;
         }
 
-        /* Layout Grid */
-        .cart-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 25px;
-        }
-
-        @media(max-width: 900px) {
-            .cart-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card-box {
+        /* Card Container */
+        .card-container {
             background: white;
             border-radius: 8px;
-            padding: 22px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 24px;
             margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            color: var(--text-dark);
         }
 
         /* Cart Item Row */
-        .cart-item-row {
+        .cart-item {
             display: flex;
             gap: 20px;
             align-items: center;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 20px;
             margin-bottom: 20px;
-            transition: transform 0.2s;
         }
 
-        .cart-item-row:last-child {
+        .cart-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
             margin-bottom: 0;
         }
 
-        .cart-item-img {
-            width: 95px;
-            height: 95px;
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 6px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
         }
 
-        .qty-controls {
+        .cart-item-details { flex: 1; }
+
+        .item-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .item-delivery {
+            font-size: 12px;
+            color: var(--success-green);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .item-price-box {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .item-price-box span {
+            font-size: 13px;
+            color: var(--text-light);
+            text-decoration: line-through;
+            font-weight: normal;
+            margin-left: 8px;
+        }
+
+        .item-controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quantity-box {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
         }
 
         .qty-btn {
-            background: #f0f0f0;
-            border: 1px solid #ccc;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 4px;
-            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
             font-weight: bold;
-            font-size: 14px;
-            transition: background 0.2s;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .qty-btn:hover {
-            background: #e0e0e0;
+        .qty-btn:hover { background: #e0e0e0; }
+
+        .qty-number {
+            font-size: 15px;
+            font-weight: bold;
+            width: 25px;
+            text-align: center;
         }
 
-        /* Action Buttons */
-        .item-actions {
+        .item-action-buttons {
             display: flex;
             gap: 15px;
-            margin-top: 10px;
             font-size: 13px;
         }
 
-        .action-link {
+        .action-btn {
             background: none;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            padding: 0;
-            transition: opacity 0.2s;
         }
 
-        .action-link:hover { opacity: 0.8; }
-        .remove-link { color: #d32f2f; }
-        .wishlist-link { color: var(--primary-blue); }
+        .wishlist-btn { color: var(--primary-blue); }
+        .remove-btn { color: #d32f2f; }
+        .action-btn:hover { opacity: 0.8; }
 
-        /* Promo Code Bar */
-        .promo-tags-box {
+        /* Promo Code Section */
+        .promo-input-group {
             display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .promo-input-group input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .promo-apply-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .promo-tags {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
 
@@ -213,62 +260,19 @@
             background: #e3f2fd;
             color: var(--primary-blue);
             border: 1px dashed var(--primary-blue);
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
-        .promo-tag:hover { background: #bbdefb; }
-
-        .coupon-input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .coupon-input-group input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .coupon-apply-btn {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 0 18px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .coupon-apply-btn:hover { background: #0056b3; }
-
-        /* Address Quick Preview */
-        .address-preview-box {
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            border-radius: 6px;
-            padding: 12px 15px;
-            font-size: 13px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Price Breakdown Sidebar */
+        /* Price Details Sidebar */
         .price-row {
             display: flex;
             justify-content: space-between;
             font-size: 14px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             color: #555;
         }
 
@@ -276,66 +280,63 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--text-dark);
-            border-top: 1px dashed #ccc;
-            padding-top: 12px;
-            margin-top: 12px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 15px;
+            margin-top: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 15px;
         }
 
         .checkout-btn {
+            width: 100%;
             background-color: var(--secondary-orange);
             color: white;
             border: none;
             padding: 14px;
-            font-weight: bold;
             font-size: 16px;
+            font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
             text-align: center;
             display: block;
             text-decoration: none;
-            margin-top: 20px;
+            margin-top: 18px;
             transition: background 0.2s;
         }
 
         .checkout-btn:hover { background-color: var(--accent-red); }
 
         /* Trust Badges */
-        .trust-badges {
+        .trust-grid {
             display: flex;
             justify-content: space-around;
-            margin-top: 18px;
+            margin-top: 20px;
             padding-top: 15px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border-color);
             font-size: 11px;
             color: var(--text-light);
             text-align: center;
         }
 
-        .trust-badges div {
+        .trust-grid div {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
         }
 
-        .trust-badges i {
-            font-size: 16px;
-            color: var(--success-green);
-        }
+        .trust-grid i { font-size: 16px; color: var(--success-green); }
 
-        .empty-cart-box {
+        /* Empty Cart State */
+        .empty-cart-view {
             text-align: center;
             padding: 60px 20px;
             background: white;
             border-radius: 8px;
+            grid-column: 1 / -1;
         }
 
-        .empty-cart-box i {
-            font-size: 60px;
-            color: #ccc;
-            margin-bottom: 15px;
-        }
+        .empty-cart-view i { font-size: 65px; color: #ccc; margin-bottom: 15px; }
 
         /* Toast Popup */
         #toast-notification {
@@ -362,52 +363,28 @@
 </head>
 <body>
 
-    <!-- Header Navigation -->
+    <!-- Header -->
     <header>
         <div class="logo" onclick="window.location.href='index.html'">Shop<span>Sphere</span></div>
         <div class="nav-links">
-            <a href="index.html"><i class="fas fa-home"></i> Home</a>
-            <a href="product.html"><i class="fas fa-th-large"></i> Products</a>
-            <a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="product.html" class="nav-link"><i class="fas fa-th-large"></i> Products</a>
+            <a href="wishlist.html" class="nav-link"><i class="fas fa-heart"></i> Wishlist</a>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="cart-main-container">
-        
-        <h2 class="section-title"><i class="fas fa-shopping-cart"></i> My Shopping Cart</h2>
-
-        <!-- Free Delivery Progress Bar -->
-        <div class="delivery-progress-banner">
-            <div style="font-size: 13px; font-weight: 600; color: var(--text-dark);" id="delivery-text">
-                <i class="fas fa-shipping-fast" style="color: var(--primary-blue);"></i> Add items to your cart to unlock <strong>FREE Express Delivery!</strong>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-fill" id="delivery-progress-fill"></div>
-            </div>
-        </div>
-
-        <!-- Saved Address Quick Preview -->
-        <div class="address-preview-box">
-            <div>
-                <i class="fas fa-map-marker-alt" style="color: var(--success-green);"></i> 
-                <strong>Delivering to:</strong> BCA Lab, LCB College Campus, Guwahati - 781014
-            </div>
-            <a href="#" style="color: var(--primary-blue); font-weight: 600; text-decoration: none; font-size: 12px;" onclick="showToast('Address selection modal opened.')">Change</a>
-        </div>
-
-        <div id="cart-content-grid" class="cart-grid">
-            <!-- Dynamically populated via JS -->
-        </div>
-
+    <!-- Main Wrapper -->
+    <main class="cart-wrapper" id="cart-main-wrapper">
+        <!-- Rendered dynamically via JS -->
     </main>
 
-    <!-- Toast Notification Popup -->
+    <!-- Toast Notification -->
     <div id="toast-notification">
         <i class="fas fa-check-circle" style="color:#2ed573;"></i>
         <span id="toast-message">Action completed successfully!</span>
     </div>
 
+    <!-- Script Logic -->
     <script>
         let appliedCouponDiscount = 0;
 
@@ -416,26 +393,23 @@
         });
 
         function renderCartPage() {
-            const gridContainer = document.getElementById('cart-content-grid');
+            const wrapper = document.getElementById('cart-main-wrapper');
             let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
 
             if (cart.length === 0) {
-                document.getElementById('delivery-progress-fill').style.width = '0%';
-                document.getElementById('delivery-text').innerHTML = `<i class="fas fa-shipping-fast" style="color: var(--primary-blue);"></i> Add items worth ₹1,500 to unlock <strong>FREE Express Delivery!</strong>`;
-                
-                gridContainer.style.gridTemplateColumns = '1fr';
-                gridContainer.innerHTML = `
-                    <div class="empty-cart-box">
+                wrapper.style.gridTemplateColumns = '1fr';
+                wrapper.innerHTML = `
+                    <div class="empty-cart-view">
                         <i class="fas fa-shopping-cart"></i>
                         <h2>Your Shopping Cart is Empty</h2>
-                        <p style="color: #777; font-size: 14px;">Browse our full catalog and add items to your cart!</p>
-                        <button class="checkout-btn" style="width: auto; padding: 10px 30px; display: inline-block; margin-top: 15px;" onclick="window.location.href='product.html'">Shop Now</button>
+                        <p style="color: #777; font-size: 14px; margin-top: 5px;">Add products from our catalog to start shopping!</p>
+                        <button class="checkout-btn" style="width: auto; display: inline-block; padding: 10px 30px; margin-top: 20px;" onclick="window.location.href='product.html'">Shop Now</button>
                     </div>
                 `;
                 return;
             }
 
-            gridContainer.style.gridTemplateColumns = '';
+            wrapper.style.gridTemplateColumns = '1fr 360px';
 
             let totalMrp = 0;
             let totalSelling = 0;
@@ -447,29 +421,27 @@
                 totalSelling += item.price * item.qty;
 
                 itemsHtml += `
-                    <div class="cart-item-row">
-                        <img src="${item.image}" class="cart-item-img" alt="${item.title}">
-                        <div style="flex: 1;">
-                            <div style="font-weight: 600; font-size: 15px;">${item.title}</div>
-                            <div style="font-size: 12px; color: var(--success-green); font-weight: 600; margin-top: 3px;">
-                                <i class="fas fa-truck"></i> Express Delivery by Tomorrow
-                            </div>
-                            <div style="font-weight: bold; color: var(--text-dark); font-size: 16px; margin-top: 6px;">
+                    <div class="cart-item">
+                        <img src="${item.image}" class="cart-item-image" alt="${item.title}">
+                        <div class="cart-item-details">
+                            <div class="item-name">${item.title}</div>
+                            <div class="item-delivery"><i class="fas fa-truck"></i> Express Delivery by Tomorrow</div>
+                            <div class="item-price-box">
                                 ₹${item.price.toLocaleString('en-IN')}
-                                <span style="font-size: 12px; color: #888; text-decoration: line-through; margin-left: 6px;">₹${Math.round(itemMrp).toLocaleString('en-IN')}</span>
+                                <span>₹${Math.round(itemMrp).toLocaleString('en-IN')}</span>
                             </div>
                             
-                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-top: 10px;">
-                                <div class="qty-controls">
-                                    <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                                    <span style="font-size: 14px; font-weight: bold; padding: 0 6px;">${item.qty}</span>
-                                    <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            <div class="item-controls-row">
+                                <div class="quantity-box">
+                                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                                    <span class="qty-number">${item.qty}</span>
+                                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
                                 </div>
-                                <div class="item-actions">
-                                    <button class="action-link wishlist-link" onclick="moveToWishlist(${index})">
+                                <div class="item-action-buttons">
+                                    <button class="action-btn wishlist-btn" onclick="moveToWishlist(${index})">
                                         <i class="fas fa-heart"></i> Move to Wishlist
                                     </button>
-                                    <button class="action-link remove-link" onclick="removeItem(${index})">
+                                    <button class="action-btn remove-btn" onclick="removeItem(${index})">
                                         <i class="fas fa-trash"></i> Remove
                                     </button>
                                 </div>
@@ -479,49 +451,51 @@
                 `;
             });
 
-            // Update Free Delivery Progress Bar
             const freeDeliveryThreshold = 1500;
-            if (totalSelling >= freeDeliveryThreshold) {
-                document.getElementById('delivery-progress-fill').style.width = '100%';
-                document.getElementById('delivery-text').innerHTML = `<i class="fas fa-check-circle" style="color: var(--success-green);"></i> You have unlocked <strong>FREE Express Delivery!</strong>`;
-            } else {
-                const diff = freeDeliveryThreshold - totalSelling;
-                const percentage = Math.min(100, Math.round((totalSelling / freeDeliveryThreshold) * 100));
-                document.getElementById('delivery-progress-fill').style.width = percentage + '%';
-                document.getElementById('delivery-text').innerHTML = `<i class="fas fa-shipping-fast" style="color: var(--primary-blue);"></i> Add <strong>₹${diff.toLocaleString('en-IN')}</strong> more to your cart to unlock <strong>FREE Express Delivery!</strong>`;
-            }
+            const progressPercent = Math.min(100, Math.round((totalSelling / freeDeliveryThreshold) * 100));
+            const diffAmount = freeDeliveryThreshold - totalSelling;
 
             const totalSavings = (totalMrp - totalSelling) + appliedCouponDiscount;
             const finalPayable = Math.max(0, totalSelling - appliedCouponDiscount);
 
-            gridContainer.innerHTML = `
-                <!-- Left Column: Items List -->
-                <div class="card-box">
-                    <div style="font-weight: bold; font-size: 16px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                        Items in Cart (${cart.length})
+            wrapper.innerHTML = `
+                <!-- Free Delivery Banner -->
+                <div class="delivery-banner">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-dark);" id="delivery-msg">
+                        ${totalSelling >= freeDeliveryThreshold ? 
+                            '<i class="fas fa-check-circle" style="color: var(--success-green);"></i> You have unlocked <strong>FREE Express Delivery!</strong>' : 
+                            `<i class="fas fa-shipping-fast" style="color: var(--primary-blue);"></i> Add <strong>₹${diffAmount.toLocaleString('en-IN')}</strong> more to unlock <strong>FREE Express Delivery!</strong>`}
                     </div>
+                    <div class="progress-track">
+                        <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                    </div>
+                </div>
+
+                <!-- Left: Items List -->
+                <div class="card-container">
+                    <div class="card-title">My Cart (${cart.length} Items)</div>
                     ${itemsHtml}
                 </div>
 
-                <!-- Right Column: Promo Code & Price Breakdown -->
+                <!-- Right: Promo & Price Summary Sidebar -->
                 <div>
-                    <!-- Promo Code Bar -->
-                    <div class="card-box">
-                        <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">AI Smart Promo Code</div>
-                        <div class="promo-tags-box">
-                            <span class="promo-tag" onclick="applyPromoCode('SAVE20')">SAVE20</span>
-                            <span class="promo-tag" onclick="applyPromoCode('FREESHIP')">FREESHIP</span>
-                            <span class="promo-tag" onclick="applyPromoCode('SHOP100')">SHOP100</span>
+                    <!-- Promo Code Box -->
+                    <div class="card-container" style="margin-bottom: 20px;">
+                        <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">Apply Promo Code</div>
+                        <div class="promo-tags">
+                            <span class="promo-tag" onclick="applyCoupon('SAVE20')">SAVE20</span>
+                            <span class="promo-tag" onclick="applyCoupon('FREESHIP')">FREESHIP</span>
+                            <span class="promo-tag" onclick="applyCoupon('SHOP100')">SHOP100</span>
                         </div>
-                        <div class="coupon-input-group">
-                            <input type="text" id="couponInput" placeholder="Enter coupon code">
-                            <button class="coupon-apply-btn" onclick="applyPromoFromInput()">Apply</button>
+                        <div class="promo-input-group">
+                            <input type="text" id="couponCodeInput" placeholder="Enter coupon code">
+                            <button class="promo-apply-btn" onclick="applyCouponInput()">Apply</button>
                         </div>
                     </div>
 
-                    <!-- Price Breakdown Sidebar -->
-                    <div class="card-box" style="height: fit-content;">
-                        <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Price Details</div>
+                    <!-- Price Details -->
+                    <div class="card-container">
+                        <div class="card-title">Price Details</div>
                         
                         <div class="price-row">
                             <span>Total MRP</span>
@@ -543,11 +517,12 @@
                             <span>Total Amount</span>
                             <span>₹${finalPayable.toLocaleString('en-IN')}</span>
                         </div>
+                        <p style="color: var(--success-green); font-weight: 600; font-size: 12px; margin-bottom: 15px;">You will save ₹${Math.round(totalSavings).toLocaleString('en-IN')} on this order!</p>
 
                         <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
 
                         <!-- Trust Badges -->
-                        <div class="trust-badges">
+                        <div class="trust-grid">
                             <div>
                                 <i class="fas fa-lock"></i>
                                 <span>100% Secure<br>Payments</span>
@@ -566,7 +541,7 @@
             `;
         }
 
-        function updateQuantity(index, change) {
+        function updateQty(index, change) {
             let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
             if (cart[index]) {
                 cart[index].qty += change;
@@ -581,10 +556,11 @@
 
         function removeItem(index) {
             let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
+            let item = cart[index];
             cart.splice(index, 1);
             localStorage.setItem('shopSphereCart', JSON.stringify(cart));
             renderCartPage();
-            showToast("Item removed from cart.");
+            showToast(`Removed "${item.title}" from cart.`);
         }
 
         function moveToWishlist(index) {
@@ -599,28 +575,28 @@
                 cart.splice(index, 1);
                 localStorage.setItem('shopSphereCart', JSON.stringify(cart));
                 renderCartPage();
-                showToast(`"${item.title}" moved to Wishlist!`);
+                showToast(`Moved "${item.title}" to Wishlist!`);
             }
         }
 
-        function applyPromoCode(code) {
-            document.getElementById('couponInput').value = code;
-            applyPromoFromInput();
+        function applyCoupon(code) {
+            document.getElementById('couponCodeInput').value = code;
+            applyCouponInput();
         }
 
-        function applyPromoFromInput() {
-            const inputVal = document.getElementById('couponInput').value.trim().toUpperCase();
-            if (inputVal === 'SAVE20') {
+        function applyCouponInput() {
+            const val = document.getElementById('couponCodeInput').value.trim().toUpperCase();
+            if (val === 'SAVE20') {
                 appliedCouponDiscount = 200;
                 showToast("Coupon 'SAVE20' applied! Saved ₹200.");
-            } else if (inputVal === 'FREESHIP') {
+            } else if (val === 'FREESHIP') {
                 appliedCouponDiscount = 40;
-                showToast("Coupon 'FREESHIP' applied! Saved delivery charges.");
-            } else if (inputVal === 'SHOP100') {
+                showToast("Coupon 'FREESHIP' applied!");
+            } else if (val === 'SHOP100') {
                 appliedCouponDiscount = 100;
                 showToast("Coupon 'SHOP100' applied! Saved ₹100.");
             } else {
-                showToast("Invalid promo code. Try SAVE20, FREESHIP, or SHOP100.");
+                showToast("Invalid promo code.");
                 return;
             }
             renderCartPage();
