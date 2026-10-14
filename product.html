@@ -3,45 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog - ShopSphere</title>
+    <title>ShopSphere - Professional Product Catalog</title>
+    <!-- FontAwesome Real Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-blue: #2874f0;
             --secondary-orange: #ff9f00;
-            --accent-red: #fb641b;
+            --accent-red: #ff3e6c;
             --success-green: #388e3c;
-            --bg-light: #f1f3f6;
-            --text-dark: #212121;
-            --text-light: #878787;
+            --bg-light: #f8f9fa;
+            --text-dark: #111111;
+            --text-light: #666666;
+            --border-color: #e0e0e0;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             background-color: var(--bg-light);
             color: var(--text-dark);
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
         }
 
+        /* Top Navigation */
         header {
             background-color: var(--primary-blue);
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 5%;
+            padding: 15px 6%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 26px;
+            font-weight: 800;
             font-style: italic;
             cursor: pointer;
+            letter-spacing: 0.5px;
         }
 
         .logo span { color: var(--secondary-orange); }
@@ -49,131 +55,161 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .nav-link {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .catalog-container {
-            max-width: 1240px;
-            margin: 25px auto;
-            padding: 0 15px;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 20px;
-        }
-
-        @media(max-width: 768px) {
-            .catalog-container { grid-template-columns: 1fr; }
-        }
-
-        .filter-sidebar {
-            background: white;
-            border-radius: 8px;
-            padding: 18px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            height: fit-content;
-        }
-
-        .filter-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .checkbox-label {
+            font-size: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            color: #444;
+            transition: color 0.2s;
         }
 
-        .sub-category-box {
-            margin-left: 18px;
-            padding-left: 10px;
-            border-left: 2px solid #2874f0;
-            margin-top: 6px;
-            margin-bottom: 10px;
-            display: none;
+        .nav-link:hover { color: var(--secondary-orange); }
+
+        /* Main Wrapper */
+        .main-wrapper {
+            max-width: 1350px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        .catalog-header {
+        /* Top Filter Toolbar */
+        .filter-toolbar {
             background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
             align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .section-title-bar {
-            background: #ffffff;
-            padding: 12px 18px;
-            border-left: 5px solid var(--primary-blue);
+        .filter-toolbar h3 {
+            margin: 0;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--text-dark);
-            margin: 25px 0 15px 0;
-            border-radius: 4px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: #f1f3f6;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 10px rgba(40, 116, 240, 0.3);
+        }
+
+        /* Distinct Category Section Styling */
+        .category-section-block {
+            background: white;
+            border-radius: 14px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .section-header-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0 0 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-header-title span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            background: #f1f3f6;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* Product Grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
             background: white;
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: transparent;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 220px;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
         }
 
         .product-image {
             width: 100%;
-            height: 180px;
+            height: 100%;
             object-fit: cover;
-            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .product-info { padding: 12px; }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info { padding: 15px; }
 
         .product-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 6px;
+            font-size: 16px;
+            font-weight: 700;
             color: var(--text-dark);
+            margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -184,57 +220,72 @@
             align-items: center;
             background: var(--success-green);
             color: white;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-            gap: 3px;
-            margin-bottom: 6px;
-        }
-
-        .product-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--success-green);
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            gap: 4px;
             margin-bottom: 10px;
         }
 
-        .btn-row { display: flex; gap: 6px; }
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--success-green);
+            margin-bottom: 15px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+        }
 
         .btn-add-cart {
             flex: 1;
             background-color: var(--secondary-orange);
             color: white;
             border: none;
-            padding: 8px;
-            font-weight: 600;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 14px;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 13px;
+            border-radius: 6px;
+            transition: background 0.2s;
         }
+
+        .btn-add-cart:hover { background-color: #fb641b; }
 
         .btn-wishlist {
-            background: #eee;
+            background: #f1f3f6;
             border: none;
-            padding: 8px 10px;
-            border-radius: 4px;
+            padding: 10px 14px;
+            border-radius: 6px;
             cursor: pointer;
             color: #555;
+            transition: color 0.2s, background 0.2s;
         }
 
+        .btn-wishlist:hover {
+            background: #ffebee;
+            color: var(--accent-red);
+        }
+
+        /* Toast Popup */
         #toast-notification {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 30px;
+            right: 30px;
             background: #212121;
             color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 14px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.3s ease;
@@ -249,6 +300,7 @@
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <div class="logo" onclick="window.location.href='index.html'">Shop<span>Sphere</span></div>
         <div class="nav-links">
@@ -258,192 +310,128 @@
         </div>
     </header>
 
-    <div class="catalog-container">
-        <!-- Sidebar Filters -->
-        <div class="filter-sidebar">
-            <div class="filter-title">
-                <span>Filters</span>
-                <span style="font-size: 12px; color: var(--primary-blue); cursor: pointer;" onclick="resetFilters()">Clear All</span>
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 8px;">CATEGORIES</label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets
-                </label>
-                
-                <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="fashion" id="fashion-checkbox" onchange="toggleFashionSubcategories(); filterProducts();"> Fashion & Apparel
-                </label>
-
-                <!-- Subcategories -->
-                <div class="sub-category-box" id="fashion-sub-container">
-                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts (10)</label>
-                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans</label>
-                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes</label>
-                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets</label>
-                </div>
-
-                <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="appliances" onchange="filterProducts()"> Home Appliances
-                </label>
-                <label class="checkbox-label">
-                    <input type="checkbox" name="cat" value="mobiles" onchange="filterProducts()"> Mobile Phones
-                </label>
-            </div>
-
-            <div>
-                <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 8px;">SORT BY PRICE</label>
-                <select id="sort-select" onchange="filterProducts()" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
-                    <option value="default">Relevance / Popularity</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
-                </select>
+    <div class="main-wrapper">
+        
+        <!-- Top Filter Toolbar -->
+        <div class="filter-toolbar">
+            <h3><i class="fas fa-filter" style="color: var(--primary-blue);"></i> Filter Sub-Categories:</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory('all', this)"><i class="fas fa-th-large"></i> All Products</button>
+                <button class="filter-btn" onclick="filterCategory('tshirt', this)"><i class="fas fa-tshirt"></i> T-Shirts (10)</button>
+                <button class="filter-btn" onclick="filterCategory('pants', this)"><i class="fas fa-user-friends"></i> Pants & Jeans</button>
+                <button class="filter-btn" onclick="filterCategory('shoes', this)"><i class="fas fa-shoe-prints"></i> Shoes & Footwear</button>
+                <button class="filter-btn" onclick="filterCategory('jackets', this)"><i class="fas fa-vest"></i> Jackets & Hoodies</button>
+                <button class="filter-btn" onclick="filterCategory('electronics', this)"><i class="fas fa-headphones"></i> Electronics</button>
+                <button class="filter-btn" onclick="filterCategory('mobiles', this)"><i class="fas fa-mobile-alt"></i> Mobiles</button>
             </div>
         </div>
 
-        <!-- Catalog Product Grid Area -->
-        <div>
-            <div class="catalog-header">
-                <div>Showing <strong id="product-count">0</strong> products available</div>
-                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Verified Quality</div>
-            </div>
-
-            <!-- Separated Container Sections -->
-            <div id="catalog-grid-sections">
-                <!-- Dynamically Rendered by JS into Separate Category Blocks -->
-            </div>
+        <!-- Distinct Separate Sections Container -->
+        <div id="separated-sections-container">
+            <!-- Dynamically Rendered Seperated Blocks -->
         </div>
+
     </div>
 
+    <!-- Toast Popup Notification -->
     <div id="toast-notification">
-        <i class="fas fa-check-circle" style="color:#2ed573;"></i>
-        <span id="toast-message">Action completed successfully!</span>
+        <i class="fas fa-check-circle" style="color:#2ed573; font-size: 20px;">​</i>
+        <span id="toast-message">Item added successfully!</span>
     </div>
 
     <script>
         const masterProducts = [
-            // 10 T-SHIRTS
-            { id: 101, title: "Classic Crewneck Black T-Shirt", category: "fashion", subcat: "tshirt", price: 499, rating: 4.4, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
-            { id: 102, title: "Pure Cotton Solid White Tee", category: "fashion", subcat: "tshirt", price: 599, rating: 4.5, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" },
-            { id: 103, title: "Graphic Printed Casual T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.2, image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=500&q=80" },
-            { id: 104, title: "Oversized Vintage Navy Tee", category: "fashion", subcat: "tshirt", price: 799, rating: 4.6, image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=500&q=80" },
-            { id: 105, title: "Striped Summer Cotton T-Shirt", category: "fashion", subcat: "tshirt", price: 549, rating: 4.3, image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80" },
-            { id: 106, title: "Athletic Quick-Dry Sport T-Shirt", category: "fashion", subcat: "tshirt", price: 649, rating: 4.7, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80" },
-            { id: 107, title: "Slim Fit Collar Polo T-Shirt", category: "fashion", subcat: "tshirt", price: 899, rating: 4.4, image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=500&q=80" },
-            { id: 108, title: "Henley Neck Olive Green Tee", category: "fashion", subcat: "tshirt", price: 749, rating: 4.3, image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=500&q=80" },
-            { id: 109, title: "Minimalist Gray V-Neck T-Shirt", category: "fashion", subcat: "tshirt", price: 499, rating: 4.1, image: "https://images.unsplash.com/photo-1618354691229-88d47f285158?auto=format&fit=crop&w=500&q=80" },
-            { id: 110, title: "Urban Streetwear Oversized Tee", category: "fashion", subcat: "tshirt", price: 999, rating: 4.8, image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=500&q=80" },
+            // 10 SEPARATE T-SHIRTS
+            { id: 101, title: "Classic Crewneck Black T-Shirt", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 499, rating: 4.5, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
+            { id: 102, title: "Pure Cotton Solid White Tee", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 599, rating: 4.6, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" },
+            { id: 103, title: "Graphic Printed Casual T-Shirt", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=500&q=80" },
+            { id: 104, title: "Oversized Vintage Navy Tee", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 799, rating: 4.7, image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=500&q=80" },
+            { id: 105, title: "Striped Summer Cotton T-Shirt", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 549, rating: 4.4, image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80" },
+            { id: 106, title: "Athletic Quick-Dry Sport Tee", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 649, rating: 4.8, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80" },
+            { id: 107, title: "Slim Fit Collar Polo T-Shirt", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 899, rating: 4.5, image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=500&q=80" },
+            { id: 108, title: "Henley Neck Olive Green Tee", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 749, rating: 4.3, image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=500&q=80" },
+            { id: 109, title: "Minimalist Gray V-Neck T-Shirt", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 499, rating: 4.2, image: "https://images.unsplash.com/photo-1618354691229-88d47f285158?auto=format&fit=crop&w=500&q=80" },
+            { id: 110, title: "Urban Streetwear Oversized Tee", subcat: "tshirt", sectionName: "👕 T-Shirts Collection", price: 999, rating: 4.9, image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=500&q=80" },
 
-            // PANTS & JEANS
-            { id: 201, title: "Classic Slim Fit Blue Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
-            { id: 202, title: "Black Casual Cotton Chino Pants", category: "fashion", subcat: "pants", price: 1299, rating: 4.4, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=500&q=80" },
+            // PANTS & JEANS SECTION
+            { id: 201, title: "Classic Slim Fit Blue Denim Jeans", subcat: "pants", sectionName: "👖 Pants & Jeans Section", price: 1499, rating: 4.6, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
+            { id: 202, title: "Black Casual Cotton Chino Pants", subcat: "pants", sectionName: "👖 Pants & Jeans Section", price: 1299, rating: 4.4, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=500&q=80" },
+            { id: 203, title: "Stretchable Cargo Jogger Pants", subcat: "pants", sectionName: "👖 Pants & Jeans Section", price: 1399, rating: 4.7, image: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=500&q=80" },
 
-            // SHOES
-            { id: 301, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
-            { id: 302, title: "White Urban Casual Sneakers", category: "fashion", subcat: "shoes", price: 2299, rating: 4.5, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=500&q=80" },
+            // SHOES SECTION
+            { id: 301, title: "Pro Athletic Running Sneakers", subcat: "shoes", sectionName: "👟 Shoes & Footwear Section", price: 3499, rating: 4.8, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
+            { id: 302, title: "White Urban Casual Street Shoes", subcat: "shoes", sectionName: "👟 Shoes & Footwear Section", price: 2299, rating: 4.5, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=500&q=80" },
 
-            // JACKETS
-            { id: 401, title: "Winter Fleece Warm Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
+            // JACKETS SECTION
+            { id: 401, title: "Winter Fleece Warm Hoodie", subcat: "jackets", sectionName: "🧥 Jackets & Hoodies Section", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
 
-            // ELECTRONICS & MOBILES
-            { id: 501, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
-            { id: 502, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
-            { id: 601, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
+            // ELECTRONICS SECTION
+            { id: 501, title: "Minimalist Smart Watch", subcat: "electronics", sectionName: "🎧 Electronics & Gadgets Section", price: 2999, rating: 4.5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+            { id: 502, title: "Wireless Bass Over-Ear Headphones", subcat: "electronics", sectionName: "🎧 Electronics & Gadgets Section", price: 1499, rating: 4.4, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
+
+            // MOBILES SECTION
+            { id: 601, title: "Flagship 5G Camera Smartphone", subcat: "mobiles", sectionName: "📱 Mobile Phones Section", price: 28999, rating: 4.9, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
         ];
 
+        let activeFilter = 'all';
+
         document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const catParam = params.get('category');
-            if(catParam) {
-                const checkboxes = document.querySelectorAll('input[name="cat"]');
-                checkboxes.forEach(cb => {
-                    if(cb.value === catParam) {
-                        cb.checked = true;
-                        if(catParam === 'fashion') {
-                            document.getElementById('fashion-sub-container').style.display = 'block';
-                        }
-                    }
-                });
-            }
-            filterProducts();
+            renderSections(masterProducts);
         });
 
-        function toggleFashionSubcategories() {
-            const fashionCheckbox = document.getElementById('fashion-checkbox');
-            const subContainer = document.getElementById('fashion-sub-container');
-            if (fashionCheckbox.checked) {
-                subContainer.style.display = 'block';
+        function filterCategory(category, btnElement) {
+            activeFilter = category;
+            
+            // Highlight active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            if(category === 'all') {
+                renderSections(masterProducts);
             } else {
-                subContainer.style.display = 'none';
-                document.querySelectorAll('input[name="subcat"]').forEach(sub => sub.checked = false);
+                const filtered = masterProducts.filter(p => p.subcat === category);
+                renderSections(filtered);
             }
         }
 
-        function filterProducts() {
-            const selectedCategories = Array.from(document.querySelectorAll('input[name="cat"]:checked')).map(cb => cb.value);
-            const selectedSubcategories = Array.from(document.querySelectorAll('input[name="subcat"]:checked')).map(cb => cb.value);
-            const sortVal = document.getElementById('sort-select').value;
-
-            let filtered = masterProducts.filter(p => {
-                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-                if (selectedCategories.includes('fashion') && selectedSubcategories.length > 0) {
-                    return matchesCategory && selectedSubcategories.includes(p.subcat);
-                }
-                return matchesCategory;
-            });
-
-            if(sortVal === 'low-high') filtered.sort((a, b) => a.price - b.price);
-            else if(sortVal === 'high-low') filtered.sort((a, b) => b.price - a.price);
-
-            renderCategorizedSections(filtered);
-        }
-
-        function renderCategorizedSections(products) {
-            const mainContainer = document.getElementById('catalog-grid-sections');
-            document.getElementById('product-count').innerText = products.length;
-
+        function renderSections(products) {
+            const container = document.getElementById('separated-sections-container');
+            
             if(products.length === 0) {
-                mainContainer.innerHTML = `<div style="text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found.</h3></div>`;
+                container.innerHTML = `<div style="text-align:center; padding:50px; background:white; border-radius:12px;"><h3>No products available in this section.</h3></div>`;
                 return;
             }
 
-            // Group products into separate categories/subcategories
-            const groups = {};
+            // Group strictly by sectionName so items never mix
+            const grouped = {};
             products.forEach(p => {
-                let groupName = p.category.toUpperCase();
-                if(p.subcat === 'tshirt') groupName = "👕 T-SHIRTS COLLECTION";
-                else if(p.subcat === 'pants') groupName = "👖 PANTS & JEANS";
-                else if(p.subcat === 'shoes') groupName = "👟 SHOES & FOOTWEAR";
-                else if(p.subcat === 'jackets') groupName = "🧥 JACKETS & HOODIES";
-                else if(p.category === 'electronics') groupName = "🎧 ELECTRONICS & GADGETS";
-                else if(p.category === 'mobiles') groupName = "📱 MOBILE PHONES";
-
-                if(!groups[groupName]) groups[groupName] = [];
-                groups[groupName].push(p);
+                if(!grouped[p.sectionName]) grouped[p.sectionName] = [];
+                grouped[p.sectionName].push(p);
             });
 
             let html = '';
-            for (const [groupTitle, groupItems] of Object.entries(groups)) {
+            for (const [sectionName, items] of Object.entries(grouped)) {
                 html += `
-                    <div class="section-title-bar">
-                        <span>${groupTitle}</span>
-                        <span style="font-size:13px; font-weight:normal; color:#666;">${groupItems.length} items</span>
-                    </div>
-                    <div class="product-grid">
+                    <div class="category-section-block">
+                        <div class="section-header-title">
+                            ${sectionName}
+                            <span>${items.length} Items Available</span>
+                        </div>
+                        <div class="product-grid">
                 `;
 
-                groupItems.forEach(p => {
+                items.forEach(p => {
                     html += `
                         <div class="product-card">
-                            <img src="${p.image}" class="product-image" alt="${p.title}">
+                            <div class="product-image-container">
+                                <img src="${p.image}" class="product-image" alt="${p.title}">
+                            </div>
                             <div class="product-info">
-                                <div class="product-title">${p.title}</div>
-                                <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
+                                <div class="product-title" title="${p.title}">${p.title}</div>
+                                <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:10px;"></i></div>
                                 <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
                                 <div class="btn-row">
-                                    <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
+                                    <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')"><i class="fas fa-shopping-cart"></i> Add</button>
                                     <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
                                 </div>
                             </div>
@@ -451,18 +439,10 @@
                     `;
                 });
 
-                html += `</div>`;
+                html += `</div></div>`;
             }
 
-            mainContainer.innerHTML = html;
-        }
-
-        function resetFilters() {
-            document.querySelectorAll('input[name="cat"]').forEach(cb => cb.checked = false);
-            document.querySelectorAll('input[name="subcat"]').forEach(cb => cb.checked = false);
-            document.getElementById('fashion-sub-container').style.display = 'none';
-            document.getElementById('sort-select').value = 'default';
-            filterProducts();
+            container.innerHTML = html;
         }
 
         function addToCart(title, price, image) {
@@ -471,7 +451,7 @@
             if(existing) existing.qty += 1;
             else cart.push({ title, price, image, qty: 1 });
             localStorage.setItem('shopSphereCart', JSON.stringify(cart));
-            showToast(`"${title}" added to cart!`);
+            showToast(`"${title}" added to cart successfully!`);
         }
 
         function toggleWishlist(title) {
@@ -479,9 +459,9 @@
             if(!wishlist.includes(title)) {
                 wishlist.push(title);
                 localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
-                showToast(`"${title}" added to wishlist!`);
+                showToast(`"${title}" added to your wishlist!`);
             } else {
-                showToast(`"${title}" is in your wishlist.`);
+                showToast(`"${title}" is already in your wishlist.`);
             }
         }
 
