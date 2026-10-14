@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172554">
+  <title>My Profile | ShopSphere</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --navy: #172554;
+      --blue: #2563eb;
+      --light: #f4f7fb;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --green: #15803d;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: #1e293b;
+    }
+
+    a { text-decoration: none; }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      color: white;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .navigation {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .navigation a {
+      color: white;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 0 18px 35px;
+    }
+
+    .welcome {
+      background: linear-gradient(120deg, #172554, #2563eb);
+      color: white;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .welcome h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .welcome p {
+      margin: 0;
+      color: #dbeafe;
+      overflow-wrap: anywhere;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 12px #00000005;
+      min-width: 0;
+    }
+
+    .panel h2 {
+      margin: 0 0 18px;
+      font-size: 20px;
+    }
+
+    .avatar {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .customer-name {
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .customer-identifier {
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .menu {
+      margin-top: 20px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu a,
+    .menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #334155;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .menu a:hover,
+    .menu button:hover {
+      background: #eaf0ff;
+      color: #1d4ed8;
+    }
+
+    .profile-field {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-field:last-child { border-bottom: 0; }
+
+    .field-label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .field-value {
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 17px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      margin-top: 8px;
+    }
+
+    .order-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 17px;
+      margin-bottom: 14px;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .order-number {
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .order-date {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .status {
+      display: inline-block;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      height: fit-content;
+    }
+
+    .status.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status.failed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .order-products {
+      padding: 12px 0;
+      line-height: 1.8;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .order-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .order-total { font-weight: bold; }
+
+    .small-button {
+      border: 0;
+      background: var(--blue);
+      color: white;
+      border-radius: 7px;
+      padding: 10px 13px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .small-button:hover { background: #1d4ed8; }
+
+    .message {
+      color: var(--muted);
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .error { color: #b91c1c; }
+    .success { color: var(--green); }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .primary-link,
+    .secondary-link {
+      display: inline-block;
+      padding: 11px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .primary-link {
+      background: var(--blue);
+      color: white;
+    }
+
+    .secondary-link {
+      background: #eaf0ff;
+      color: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 22px;
+      font-size: 13px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      header { padding: 17px 5%; }
+      .brand { font-size: 22px; }
+      .navigation { gap: 13px; }
+      main { margin-top: 18px; padding: 0 12px 25px; }
+      .welcome { padding: 22px; }
+      .welcome h1 { font-size: 25px; }
+      .panel { padding: 17px; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { padding: 14px; }
+      .stat strong { font-size: 21px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 1. Profile header and navigation -->
+  <header>
+    <a class="brand" href="index.html">ShopSphere</a>
+
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="welcome">
+      <h1 id="welcomeTitle">My Account</h1>
+      <p id="welcomeSubtitle">Manage your ShopSphere account and orders.</p>
+    </section>
+
+    <section id="loginNotice" class="panel" hidden>
+      <h2>Login required</h2>
+      <p class="message">
+        Please log in to view your personal information and order history.
+      </p>
+      <div class="button-row">
+        <a class="primary-link" href="login.html">Go to Login</a>
+        <a class="secondary-link" href="register.html">Create Account</a>
+      </div>
+    </section>
+
+    <section id="pageError" class="panel" hidden>
+      <h2>Unable to load your account</h2>
+      <p id="pageErrorMessage" class="message error"></p>
+      <button id="retryButton" class="small-button" type="button">
+        Try Again
+      </button>
+    </section>
+
+    <div id="profileContent" class="layout" hidden>
+      <!-- Sidebar: personal information and account actions -->
+      <aside>
+        <section class="panel">
+          <div id="avatar" class="avatar" aria-hidden="true">U</div>
+          <div id="customerName" class="customer-name">Customer</div>
+          <div id="customerIdentifier" class="customer-identifier"></div>
+
+          <nav class="menu" aria-label="Account menu">
+            <a href="#personalInformation">Personal Information</a>
+            <a href="#myOrders">My Orders</a>
+            <a href="wishlist.html">My Wishlist</a>
+            <a href="products.html">Continue Shopping</a>
+            <button id="logoutButton" type="button">Log Out</button>
+          </nav>
+        </section>
+
+        <!-- 2. Personal information -->
+        <section id="personalInformation" class="panel">
+          <h2>Personal Information</h2>
+
+          <div class="profile-field">
+            <span class="field-label">Full Name</span>
+            <span id="profileName" class="field-value">—</span>
+          </div>
+
+          <div class="profile-field">
+            <span class="field-label">Registered Email / Phone</span>
+            <span id="profileIdentifier" class="field-value">—</span>
+          </div>
+
+          <p class="message">
+            Your registered details are displayed here. Profile editing
+            requires a secure backend update endpoint.
+          </p>
+        </section>
+      </aside>
+
+      <div>
+        <!-- Account summary -->
+        <section class="stats" aria-label="Account summary">
+          <div class="stat">
+            <span>Total Orders</span>
+            <strong id="totalOrders">0</strong>
+          </div>
+          <div class="stat">
+            <span>Paid Orders</span>
+            <strong id="paidOrders">0</strong>
+          </div>
+          <div class="stat">
+            <span>Pending Payments</span>
+            <strong id="pendingPayments">0</strong>
+          </div>
+        </section>
+
+        <!-- 3. Order history and 4. Order tracking -->
+        <section id="myOrders" class="panel">
+          <h2>My Orders</h2>
+          <p id="ordersMessage" class="message" aria-live="polite">
+            Loading your order history...
+          </p>
+          <div id="ordersList"></div>
+        </section>
+
+        <!-- 5. Wishlist shortcut -->
+        <section class="panel">
+          <h2>My Wishlist</h2>
+          <p class="message">
+            Visit your saved products to see the items you want to buy later.
+          </p>
+          <a href="wishlist.html" class="primary-link">View Wishlist</a>
+        </section>
+
+        <!-- 6. Account actions -->
+        <section class="panel">
+          <h2>Account Actions</h2>
+          <p class="message">
+            For your security, password changes and profile updates should
+            be handled by authenticated backend endpoints.
+          </p>
+          <div class="button-row">
+            <a href="contact.html" class="secondary-link">
+              Contact Support
+            </a>
+            <button id="logoutButtonBottom" class="small-button" type="button">
+              Log Out
+            </button>
+          </div>
+          <p id="logoutMessage" class="message" aria-live="polite"></p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> ShopSphere. All rights reserved.
+  </footer>
+
+  <script>
+    /*
+      This page expects:
+      GET /api/orders/:identifier
+
+      It uses the existing ShopSphere login convention of storing a user
+      object in localStorage. Update USER_STORAGE_KEY if your login page
+      uses a different key.
+
+      Important: localStorage alone is not secure authentication.
+      The backend must enforce customer ownership before this is used publicly.
+    */
+
+    const USER_STORAGE_KEY = "shopSphereUser";
+
+    const profileContent = document.getElementById("profileContent");
+    const loginNotice = document.getElementById("loginNotice");
+    const pageError = document.getElementById("pageError");
+    const pageErrorMessage = document.getElementById("pageErrorMessage");
+    const ordersMessage = document.getElementById("ordersMessage");
+    const ordersList = document.getElementById("ordersList");
+
+    let currentUser = null;
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    function setText(id, value) {
+      document.getElementById(id).textContent =
+        value === undefined || value === null || value === ""
+          ? "Not available"
+          : String(value);
+    }
+
+    function formatMoney(value) {
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) return "Not available";
+
+      return "₹" + amount.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function formatDate(value) {
+      if (!value) return "Date unavailable";
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Date unavailable";
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function readUser() {
+      try {
+        const raw = localStorage.getItem(USER_STORAGE_KEY);
+        if (!raw) return null;
+
+        const user = JSON.parse(raw);
+
+        if (!user || typeof user !== "object") return null;
+
+        const identifier = user.identifier || user.email || user.phone;
+        if (!identifier) return null;
+
+        return {
+          name: user.name || "Customer",
+          identifier: String(identifier)
+        };
+      } catch {
+        return null;
+      }
+    }
+
+    function showLoginRequired() {
+      profileContent.hidden = true;
+      pageError.hidden = true;
+      loginNotice.hidden = false;
+    }
+
+    function showPageError(message) {
+      pageErrorMessage.textContent = message;
+      pageError.hidden = false;
+    }
+
+    function renderProfile(user) {
+      const name = user.name || "Customer";
+      const identifier = user.identifier || "Not available";
+
+      setText("welcomeTitle", "Welcome, " + name);
+      setText("welcomeSubtitle", "Your ShopSphere account overview.");
+      setText("customerName", name);
+      setText("customerIdentifier", identifier);
+      setText("profileName", name);
+      setText("profileIdentifier", identifier);
+
+      const initials = name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(part => part.charAt(0).toUpperCase())
+        .join("");
+
+      setText("avatar", initials || "U");
+    }
+
+    function createOrderCard(order) {
+      const card = document.createElement("article");
+      card.className = "order-card";
+
+      const top = document.createElement("div");
+      top.className = "order-top";
+
+      const orderInfo = document.createElement("div");
+
+      const orderNumber = document.createElement("div");
+      orderNumber.className = "order-number";
+      orderNumber.textContent = "Order: " + (order.orderId || "Unavailable");
+
+      const date = document.createElement("div");
+      date.className = "order-date";
+      date.textContent = formatDate(order.createdAt);
+
+      orderInfo.append(orderNumber, date);
+
+      const status = document.createElement("span");
+      status.className = "status";
+
+      const orderStatus = String(order.status || "Processing");
+      status.textContent = orderStatus;
+
+      const normalizedStatus = orderStatus.toLowerCase();
+      if (normalizedStatus.includes("pending") ||
+          normalizedStatus.includes("awaiting")) {
+        status.classList.add("pending");
+      } else if (normalizedStatus.includes("cancel") ||
+                 normalizedStatus.includes("fail")) {
+        status.classList.add("failed");
+      }
+
+      top.append(orderInfo, status);
+
+      const productList = document.createElement("div");
+      productList.className = "order-products";
+
+      if (Array.isArray(order.items) && order.items.length) {
+        productList.textContent = order.items.map(item => {
+          const name = item.title || item.name || "Product";
+          const quantity = Number(item.quantity || 1);
+          return name + " × " + quantity;
+        }).join(" · ");
+      } else {
+        productList.textContent = "Product details unavailable.";
+      }
+
+      const paymentInfo = document.createElement("p");
+      paymentInfo.className = "message";
+
+      const paymentMethod = order.paymentMethod === "COD"
+        ? "Cash on Delivery"
+        : order.paymentMethod === "RAZORPAY"
+          ? "Razorpay"
+          : (order.paymentMethod || "Not available");
+
+      paymentInfo.textContent =
+        "Payment: " + paymentMethod +
+        " · Status: " + (order.paymentStatus || "PENDING");
+
+      const bottom = document.createElement("div");
+      bottom.className = "order-bottom";
+
+      const total = document.createElement("div");
+      total.className = "order-total";
+      total.textContent = formatMoney(order.totalAmount);
+
+      const viewButton = document.createElement("button");
+      viewButton.type = "button";
+      viewButton.className = "small-button";
+      viewButton.textContent = "View Order";
+
+      viewButton.addEventListener("click", function () {
+        if (!order.orderId) {
+          ordersMessage.textContent =
+            "This order does not have an available order ID.";
+          return;
+        }
+
+        window.location.href =
+          "order-success.html?orderId=" +
+          encodeURIComponent(order.orderId);
+      });
+
+      bottom.append(total, viewButton);
+      card.append(top, productList, paymentInfo, bottom);
+
+      return card;
+    }
+
+    async function loadOrders() {
+      ordersMessage.textContent = "Loading your order history...";
+      ordersList.replaceChildren();
+
+      const response = await fetch(
+        "/api/orders/" + encodeURIComponent(currentUser.identifier),
+        {
+          method: "GET",
+          headers: { "Accept": "application/json" },
+          credentials: "same-origin"
+        }
+      );
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message || "Could not load your order history."
+        );
+      }
+
+      const orders = Array.isArray(result.orders) ? result.orders : [];
+
+      setText("totalOrders", orders.length);
+
+      const paid = orders.filter(order =>
+        order.paymentStatus === "PAID"
+      ).length;
+
+      const pending = orders.filter(order =>
+        !order.paymentStatus || order.paymentStatus === "PENDING"
+      ).length;
+
+      setText("paidOrders", paid);
+      setText("pendingPayments", pending);
+
+      if (orders.length === 0) {
+        ordersMessage.textContent =
+          "You have not placed any orders yet.";
+        return;
+      }
+
+      ordersMessage.textContent =
+        "Here are the orders returned by your ShopSphere server.";
+
+      orders.forEach(order => {
+        ordersList.appendChild(createOrderCard(order));
+      });
+    }
+
+    function logout() {
+      /*
+        This removes the frontend user indicator. A production application
+        should also call its server logout endpoint to invalidate the session.
+      */
+      localStorage.removeItem(USER_STORAGE_KEY);
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("logoutButton").addEventListener("click", logout);
+    document.getElementById("logoutButtonBottom").addEventListener("click", logout);
+
+    document.getElementById("retryButton").addEventListener("click", async () => {
+      pageError.hidden = true;
+      try {
+        await loadOrders();
+      } catch (error) {
+        showPageError(error.message);
+      }
+    });
+
+    async function initializeProfile() {
+      currentUser = readUser();
+
+      if (!currentUser) {
+        showLoginRequired();
+        return;
+      }
+
+      loginNotice.hidden = true;
+      pageError.hidden = true;
+      profileContent.hidden = false;
+
+      renderProfile(currentUser);
+
+      try {
+        await loadOrders();
+      } catch (error) {
+        ordersMessage.textContent =
+          "Could not load orders: " + error.message;
+        showPageError(error.message);
+      }
+    }
+
+    initializeProfile();
+  </script>
+</body>
+</html>
