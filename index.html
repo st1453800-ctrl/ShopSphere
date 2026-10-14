@@ -2418,5 +2418,14 @@
     updateCounts();
     renderAllGroups();
   </script>
+  <script>
+  window.addEventListener("load", function () {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    } else {
+      console.error("Lucide did not load. Check your internet connection.");
+    }
+  });
+</script>
 </body>
 </html>
