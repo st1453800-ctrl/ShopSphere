@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopSphere - Animated & Separated Catalog</title>
+    <title>Product Catalog & Fashion Subcategories - ShopSphere</title>
+    <meta name="description" content="Browse and filter electronics, fashion t-shirts, pants, shoes, and gadgets on ShopSphere.">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-blue: #2874f0;
             --secondary-orange: #ff9f00;
-            --accent-red: #ff3e6c;
+            --accent-red: #fb641b;
             --success-green: #388e3c;
             --bg-light: #f1f3f6;
-            --text-dark: #111111;
-            --text-light: #666666;
-            --border-color: #e0e0e0;
+            --text-dark: #212121;
+            --text-light: #878787;
         }
-
-        * { box-sizing: border-box; }
 
         body {
             background-color: var(--bg-light);
@@ -26,35 +24,33 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            width: 100vw;
-            overflow-x: hidden;
-            padding-bottom: 70px; /* Space for Mobile Bottom Bar */
         }
 
-        /* Full Width Header */
+        /* Header Styling */
         header {
             background-color: var(--primary-blue);
             color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 4%;
+            padding: 12px 5%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .logo {
             font-size: 24px;
-            font-weight: 800;
+            font-weight: bold;
             font-style: italic;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            letter-spacing: 1px;
         }
 
-        .logo:hover { transform: scale(1.05); }
-        .logo span { color: var(--secondary-orange); }
+        .logo span {
+            color: var(--secondary-orange);
+        }
 
         .nav-links {
             display: flex;
@@ -67,143 +63,155 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: color 0.2s ease;
         }
 
-        .nav-link:hover { color: var(--secondary-orange); }
+        .nav-link:hover {
+            color: var(--secondary-orange);
+        }
 
-        /* Top Horizontal Category Slider */
-        .top-category-bar {
-            background: #ffffff;
+        /* Catalog Layout */
+        .catalog-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+        }
+
+        @media(max-width: 768px) {
+            .catalog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Filters */
+        .filter-sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            height: fit-content;
+        }
+
+        .filter-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
             display: flex;
-            gap: 15px;
-            padding: 10px 4%;
-            overflow-x: auto;
-            white-space: nowrap;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-            position: sticky;
-            top: 55px;
-            z-index: 900;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .top-category-bar::-webkit-scrollbar { display: none; }
+        .filter-group {
+            margin-bottom: 20px;
+        }
 
-        .cat-tab {
-            padding: 8px 18px;
-            background: #f8f9fa;
-            border-radius: 20px;
+        .filter-group label.group-heading {
+            display: block;
             font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 1px solid #e0e0e0;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkbox-label {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #444;
+            font-weight: 500;
         }
 
-        .cat-tab:hover, .cat-tab.active {
-            background: var(--primary-blue);
-            color: white;
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(40, 116, 240, 0.3);
+        .sub-category-box {
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 2px solid #e0e0e0;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            display: none;
         }
 
-        /* 100% Full Width Layout */
-        .catalog-container {
-            width: 95%;
-            margin: 20px auto;
+        .filter-group select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
         }
 
-        /* Distinct Separated Category Block with Slide-In Animation */
-        .category-block {
-            background: white;
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-            border: 1px solid var(--border-color);
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .category-block-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin: 0 0 18px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e3edfc;
+        /* Catalog Content Area */
+        .catalog-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-        }
-
-        .category-block-title span {
-            font-size: 13px;
-            color: var(--text-light);
-            background: var(--bg-light);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-weight: 600;
+            align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         /* Product Grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
             background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 6px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            cursor: pointer;
             position: relative;
         }
 
         .product-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
         }
 
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 190px;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            cursor: pointer;
         }
 
-        .product-card:hover .product-image {
-            transform: scale(1.06);
+        .product-info {
+            padding: 15px;
         }
-
-        .product-info { padding: 14px; }
 
         .product-title {
             font-size: 15px;
-            font-weight: 700;
-            color: var(--text-dark);
+            font-weight: 600;
             margin-bottom: 6px;
+            color: var(--text-dark);
+            cursor: pointer;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .product-title:hover {
+            color: var(--primary-blue);
         }
 
         .rating-badge {
@@ -213,34 +221,23 @@
             color: white;
             font-size: 11px;
             padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-bottom: 8px;
             gap: 3px;
-            margin-bottom: 6px;
-        }
-
-        .mrp-crossed {
-            font-size: 12px;
-            color: #888;
-            text-decoration: line-through;
-            margin-right: 6px;
         }
 
         .product-price {
             font-size: 18px;
-            font-weight: 800;
-            color: #111;
+            font-weight: bold;
+            color: var(--success-green);
+            margin-bottom: 12px;
         }
 
-        .bank-offer-tag {
-            font-size: 11px;
-            color: var(--primary-blue);
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: block;
+        .btn-row {
+            display: flex;
+            gap: 8px;
         }
-
-        .btn-row { display: flex; gap: 8px; }
 
         .btn-add-cart {
             flex: 1;
@@ -248,207 +245,69 @@
             color: white;
             border: none;
             padding: 9px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            border-radius: 5px;
-            font-size: 13px;
-            transition: all 0.2s ease;
+            border-radius: 4px;
+            font-size: 14px;
         }
 
         .btn-add-cart:hover {
             background-color: var(--accent-red);
-            transform: scale(1.02);
         }
-
-        .btn-add-cart:active { transform: scale(0.96); }
 
         .btn-wishlist {
             background: #eee;
             border: none;
             padding: 9px 12px;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             color: #555;
-            transition: all 0.2s ease;
         }
 
         .btn-wishlist:hover {
-            background: #ffebee;
             color: var(--accent-red);
         }
 
-        /* Product Detail & Interactive Review Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            border-radius: 12px;
-            overflow-y: auto;
-            padding: 25px;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn { from { transform: scale(0.8); } to { transform: scale(1); } }
-
-        .modal-close {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #888;
-        }
-
-        .modal-body {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 20px;
-        }
-
-        @media(max-width: 700px) { .modal-body { grid-template-columns: 1fr; } }
-
-        .modal-img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .star-rating-interactive {
-            display: flex;
-            gap: 6px;
-            margin: 10px 0;
-            font-size: 20px;
-            color: #ccc;
-            cursor: pointer;
-        }
-
-        .star-rating-interactive .fa-star.active {
-            color: var(--secondary-orange);
-        }
-
-        .spec-box {
-            background: var(--bg-light);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            margin: 10px 0;
-        }
-
-        .reviews-section {
-            margin-top: 20px;
-            border-top: 2px solid var(--bg-light);
-            padding-top: 15px;
-        }
-
-        .review-card {
-            background: #f9f9f9;
-            padding: 10px 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .add-review-box {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .add-review-box input {
-            flex: 1;
-            padding: 9px 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .add-review-box button {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 9px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 700;
-        }
-
-        /* Mobile Bottom Nav Bar */
-        .mobile-bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .mobile-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 11px;
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            position: relative;
-        }
-
-        .mobile-nav-item i { font-size: 18px; margin-bottom: 3px; }
-
-        .cart-badge {
-            position: absolute;
-            top: -4px; right: 8px;
-            background: var(--accent-red);
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
+        /* Toast Notification */
         #toast-notification {
             position: fixed;
-            bottom: 75px; right: 25px;
+            bottom: 30px;
+            right: 30px;
             background: #212121;
             color: white;
-            padding: 12px 22px;
+            padding: 12px 24px;
             border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             font-size: 14px;
+            font-weight: 500;
             z-index: 9999;
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.3s ease;
+            transition: opacity 0.3s, transform 0.3s;
             pointer-events: none;
         }
 
-        #toast-notification.show { opacity: 1; transform: translateY(0); }
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #toast-notification i {
+            color: #2ed573;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header Navigation -->
     <header>
-        <div class="logo" onclick="window.location.href='index.html'">Shop<span>Sphere</span></div>
+        <div class="logo" onclick="window.location.href='index.html'">
+            Shop<span>Sphere</span>
+        </div>
         <div class="nav-links">
             <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
             <a class="nav-link" href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
@@ -456,240 +315,222 @@
         </div>
     </header>
 
-    <!-- Top Scrollable Categories Bar -->
-    <div class="top-category-bar">
-        <div class="cat-tab active" onclick="filterByTab('all', this)"><i class="fas fa-th-large"></i> All Categories</div>
-        <div class="cat-tab" onclick="filterByTab('tshirt', this)"><i class="fas fa-tshirt"></i> T-Shirts (10)</div>
-        <div class="cat-tab" onclick="filterByTab('pants', this)"><i class="fas fa-user-friends"></i> Pants & Jeans</div>
-        <div class="cat-tab" onclick="filterByTab('shoes', this)"><i class="fas fa-shoe-prints"></i> Shoes</div>
-        <div class="cat-tab" onclick="filterByTab('jackets', this)"><i class="fas fa-vest"></i> Jackets</div>
-        <div class="cat-tab" onclick="filterByTab('electronics', this)"><i class="fas fa-headphones"></i> Electronics</div>
-        <div class="cat-tab" onclick="filterByTab('mobiles', this)"><i class="fas fa-mobile-alt"></i> Mobiles</div>
-    </div>
-
-    <!-- Main Catalog Block Container -->
+    <!-- Catalog Container -->
     <div class="catalog-container">
-        <div id="separated-sections">
-            <!-- Dynamically populated -->
-        </div>
-    </div>
+        
+        <!-- Sidebar Filters -->
+        <div class="filter-sidebar">
+            <div class="filter-title">
+                <span>Filters</span>
+                <span style="font-size: 12px; color: var(--primary-blue); cursor: pointer;" onclick="resetFilters()">Clear All</span>
+            </div>
+            
+            <div class="filter-group">
+                <label class="group-heading">Categories</label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets
+                </label>
+                
+                <!-- Fashion Main Category with Sequential Sub-categories -->
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="fashion" id="fashion-checkbox" onchange="toggleFashionSubcategories(); filterProducts();"> Fashion & Apparel
+                </label>
 
-    <!-- Modal Popup for Product Details & Reviews -->
-    <div class="modal-overlay" id="product-modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <div class="modal-body">
-                <div>
-                    <img src="" id="modal-img" class="modal-img">
+                <!-- Sub-categories List -->
+                <div class="sub-category-box" id="fashion-sub-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes & Footwear
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets & Hoodies
+                    </label>
                 </div>
-                <div>
-                    <h2 id="modal-title" style="margin-top:0;"></h2>
-                    <div class="rating-badge" id="modal-rating"></div>
-                    
-                    <div style="margin-top:8px;">
-                        <span class="mrp-crossed" id="modal-mrp"></span>
-                        <span class="product-price" id="modal-price"></span>
-                    </div>
 
-                    <h4>Rate This Product:</h4>
-                    <div class="star-rating-interactive" id="star-box">
-                        <i class="fas fa-star" onclick="setRating(1)"></i>
-                        <i class="fas fa-star" onclick="setRating(2)"></i>
-                        <i class="fas fa-star" onclick="setRating(3)"></i>
-                        <i class="fas fa-star" onclick="setRating(4)"></i>
-                        <i class="fas fa-star" onclick="setRating(5)"></i>
-                    </div>
-
-                    <h4>Specifications:</h4>
-                    <div class="spec-box" id="modal-specs"></div>
-
-                    <button class="btn-add-cart" id="modal-add-btn" style="width:100%; margin-top:10px;">Add to Cart</button>
-                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="appliances" onchange="filterProducts()"> Home Appliances
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="mobiles" onchange="filterProducts()"> Mobile Phones
+                </label>
             </div>
 
-            <div class="reviews-section">
-                <h3>Customer Reviews & Comments (<span id="review-count">0</span>)</h3>
-                <div id="reviews-list"></div>
-
-                <div class="add-review-box">
-                    <input type="text" id="review-input" placeholder="Write your review or feedback...">
-                    <button onclick="postReview()">Submit</button>
-                </div>
+            <div class="filter-group">
+                <label class="group-heading">Sort By Price</label>
+                <select id="sort-select" onchange="filterProducts()">
+                    <option value="default">Relevance / Popularity</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                    <option value="rating">Customer Ratings</option>
+                </select>
             </div>
         </div>
+
+        <!-- Catalog Product Grid Area -->
+        <div>
+            <div class="catalog-header">
+                <div>Showing <strong id="product-count">0</strong> products available in catalog</div>
+                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Quality Verified</div>
+            </div>
+
+            <div class="product-grid" id="catalog-grid">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
     </div>
 
-    <!-- Mobile Bottom Navigation Bar -->
-    <div class="mobile-bottom-nav">
-        <a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i> Home</a>
-        <a href="product.html" class="mobile-nav-item"><i class="fas fa-th-large"></i> Categories</a>
-        <a href="wishlist.html" class="mobile-nav-item"><i class="fas fa-heart"></i> Wishlist</a>
-        <a href="cart.html" class="mobile-nav-item">
-            <i class="fas fa-shopping-cart"></i> Cart
-            <span class="cart-badge" id="bottom-cart-count">0</span>
-        </a>
-    </div>
-
+    <!-- Toast Notification -->
     <div id="toast-notification">
-        <i class="fas fa-check-circle" style="color:#2ed573;"></i>
+        <i class="fas fa-check-circle"></i>
         <span id="toast-message">Action completed successfully!</span>
     </div>
 
+    <!-- Catalog Management Logic -->
     <script>
         const masterProducts = [
-            // 10 T-SHIRTS
-            { id: 101, title: "Classic Crewneck Black T-Shirt", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 999, price: 499, rating: 4.5, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80", specs: "100% Cotton | Premium Bio-Washed | Regular Fit", reviews: ["Loved the fabric!"] },
-            { id: 102, title: "Pure Cotton Solid White Tee", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1199, price: 599, rating: 4.6, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80", specs: "Super Soft Breathable Cotton | Durable Stitch", reviews: ["Very clean look."] },
-            { id: 103, title: "Graphic Printed Casual T-Shirt", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1299, price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=500&q=80", specs: "High Quality Screen Print | Stretchable Material", reviews: ["Cool graphic."] },
-            { id: 104, title: "Oversized Vintage Navy Tee", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1499, price: 799, rating: 4.7, image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=500&q=80", specs: "Drop-Shoulder Streetwear Fit | Heavyweight", reviews: ["Best oversized tee!"] },
-            { id: 105, title: "Striped Summer Cotton T-Shirt", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 999, price: 549, rating: 4.4, image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80", specs: "Lightweight Summer Fabric | Dyed Yarn", reviews: ["Super comfortable."] },
-            { id: 106, title: "Athletic Quick-Dry Sport Tee", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1199, price: 649, rating: 4.8, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80", specs: "Moisture Wicking | Perfect for Gym", reviews: ["Great sports tee."] },
-            { id: 107, title: "Slim Fit Collar Polo T-Shirt", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1699, price: 899, rating: 4.5, image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=500&q=80", specs: "Pique Cotton | Premium Collar Placket", reviews: ["Looks formal & stylish."] },
-            { id: 108, title: "Henley Neck Olive Green Tee", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1399, price: 749, rating: 4.3, image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=500&q=80", specs: "3-Button Placket | Combed Cotton Blend", reviews: ["Nice olive shade."] },
-            { id: 109, title: "Minimalist Gray V-Neck T-Shirt", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 899, price: 499, rating: 4.2, image: "https://images.unsplash.com/photo-1618354691229-88d47f285158?auto=format&fit=crop&w=500&q=80", specs: "V-Neck Collar | Daily Casual Wear", reviews: ["Good fit."] },
-            { id: 110, title: "Urban Streetwear Oversized Tee", subcat: "tshirt", categoryTitle: "👕 T-SHIRTS COLLECTION", mrp: 1799, price: 999, rating: 4.9, image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=500&q=80", specs: "Trendy Street Fashion | Heavy Duty Fabric", reviews: ["Awesome design!"] },
-
-            // PANTS
-            { id: 201, title: "Classic Slim Fit Blue Denim Jeans", subcat: "pants", categoryTitle: "👖 PANTS & JEANS SECTION", mrp: 2999, price: 1499, rating: 4.6, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80", specs: "Stretchable Denim | Durable 5-Pocket Design", reviews: ["Very durable."] },
-            
-            // SHOES
-            { id: 301, title: "Pro Athletic Running Sneakers", subcat: "shoes", categoryTitle: "👟 SHOES & FOOTWEAR SECTION", mrp: 5999, price: 3499, rating: 4.8, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80", specs: "Cushioned Sole | High Grip Mesh Upper", reviews: ["Super comfortable running shoes!"] },
-
-            // ELECTRONICS & MOBILES
-            { id: 501, title: "Minimalist Smart Watch", subcat: "electronics", categoryTitle: "🎧 ELECTRONICS & GADGETS", mrp: 4999, price: 2999, rating: 4.5, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80", specs: "SpO2 & Heart Rate Tracker | AMOLED Display", reviews: ["Battery lasts 7 days."] },
-            { id: 601, title: "Flagship 5G Camera Smartphone", subcat: "mobiles", categoryTitle: "📱 MOBILE PHONES", mrp: 35999, price: 28999, rating: 4.9, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80", specs: "108MP Camera | 120Hz OLED | 5000mAh Battery", reviews: ["Great camera phone."] }
+            { id: 1, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+            { id: 2, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
+            { id: 3, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
+            { id: 4, title: "Vintage Mirrorless Camera", category: "electronics", subcat: "none", price: 45999, rating: 4.8, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" },
+            { id: 5, title: "Casual Cotton Graphic T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
+            { id: 6, title: "Classic Slim Fit Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
+            { id: 7, title: "Winter Warm Fleece Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
+            { id: 8, title: "Portable Waterproof Speaker", category: "appliances", subcat: "none", price: 1799, rating: 4.5, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80" },
+            { id: 9, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
         ];
 
-        let activeProduct = null;
-
         document.addEventListener('DOMContentLoaded', () => {
-            renderSections(masterProducts);
-            updateCartCount();
+            const params = new URLSearchParams(window.location.search);
+            const catParam = params.get('category');
+            if(catParam) {
+                const checkboxes = document.querySelectorAll('input[name="cat"]');
+                checkboxes.forEach(cb => {
+                    if(cb.value === catParam) {
+                        cb.checked = true;
+                        if(catParam === 'fashion') {
+                            document.getElementById('fashion-sub-container').style.display = 'block';
+                        }
+                    }
+                });
+            }
+            filterProducts();
         });
 
-        function filterByTab(subcat, element) {
-            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-            element.classList.add('active');
-
-            if(subcat === 'all') {
-                renderSections(masterProducts);
+        function toggleFashionSubcategories() {
+            const fashionCheckbox = document.getElementById('fashion-checkbox');
+            const subContainer = document.getElementById('fashion-sub-container');
+            if (fashionCheckbox.checked) {
+                subContainer.style.display = 'block';
             } else {
-                const filtered = masterProducts.filter(p => p.subcat === subcat);
-                renderSections(filtered);
+                subContainer.style.display = 'none';
+                // Uncheck subcategories when main category is unchecked
+                document.querySelectorAll('input[name="subcat"]').forEach(sub => sub.checked = false);
             }
         }
 
-        function renderSections(products) {
-            const container = document.getElementById('separated-sections');
+        
+function filterProducts() {
+    const selectedCategories = Array.from(
+        document.querySelectorAll('input[name="cat"]:checked')
+    ).map(cb => cb.value);
+
+    const selectedSubcategories = Array.from(
+        document.querySelectorAll('input[name="subcat"]:checked')
+    ).map(cb => cb.value);
+
+    const sortVal = document.getElementById('sort-select').value;
+
+    // Read the product search term from the URL
+    const params = new URLSearchParams(window.location.search);
+    const searchTerm = (params.get('search') || '')
+        .toLowerCase()
+        .trim();
+
+    // Filter the products
+    let filtered = masterProducts.filter(p => {
+        const matchesCategory =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(p.category);
+
+        const matchesSearch =
+            !searchTerm ||
+            p.title.toLowerCase().includes(searchTerm);
+
+        const matchesSubcategory =
+            !selectedCategories.includes('fashion') ||
+            selectedSubcategories.length === 0 ||
+            selectedSubcategories.includes(p.subcat);
+
+        return matchesCategory && matchesSearch && matchesSubcategory;
+    });
+
+    // Sort the products
+    if (sortVal === 'low-high') {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sortVal === 'high-low') {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (sortVal === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+    }
+
+    // Display the filtered products
+    renderCatalog(filtered);
+}
+
+
+        function renderCatalog(products) {
+            const container = document.getElementById('catalog-grid');
+            document.getElementById('product-count').innerText = products.length;
 
             if(products.length === 0) {
-                container.innerHTML = `<div style="text-align:center; padding:50px; background:white; border-radius:12px;"><h3>No products available in this category.</h3></div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found matching criteria.</h3><p style="color:#777; font-size:14px;">Try selecting a different sub-category or clearing filters.</p></div>`;
                 return;
             }
 
-            // Strictly separate into category blocks
-            const grouped = {};
-            products.forEach(p => {
-                if(!grouped[p.categoryTitle]) grouped[p.categoryTitle] = [];
-                grouped[p.categoryTitle].push(p);
-            });
-
             let html = '';
-            for (const [title, items] of Object.entries(grouped)) {
+            products.forEach(p => {
                 html += `
-                    <div class="category-block">
-                        <div class="category-block-title">
-                            ${title}
-                            <span>${items.length} Items Available</span>
-                        </div>
-                        <div class="product-grid">
-                `;
-
-                items.forEach(p => {
-                    html += `
-                        <div class="product-card" onclick="openProductModal(${p.id})">
-                            <img src="${p.image}" class="product-image" alt="${p.title}">
-                            <div class="product-info">
-                                <div class="product-title">${p.title}</div>
-                                <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
-                                <div>
-                                    <span class="mrp-crossed">₹${p.mrp.toLocaleString('en-IN')}</span>
-                                    <span class="product-price">₹${p.price.toLocaleString('en-IN')}</span>
-                                </div>
-                                <span class="bank-offer-tag">Bank Offer: 10% Instant Discount</span>
-                                <div class="btn-row" onclick="event.stopPropagation()">
-                                    <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
-                                    <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
-                                </div>
+                    <div class="product-card">
+                        <img src="${p.image}" class="product-image" alt="${p.title}" onclick="window.location.href='product-detail.html'">
+                        <div class="product-info">
+                            <div class="product-title" onclick="window.location.href='product-detail.html'">${p.title}</div>
+                            <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
+                            <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
+                            <div class="btn-row">
+                                <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
+                                <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
                             </div>
                         </div>
-                    `;
-                });
-
-                html += `</div></div>`;
-            }
-
+                    </div>
+                `;
+            });
             container.innerHTML = html;
         }
 
-        /* Modal Handlers */
-        function openProductModal(id) {
-            activeProduct = masterProducts.find(p => p.id === id);
-            if(!activeProduct) return;
-
-            document.getElementById('modal-img').src = activeProduct.image;
-            document.getElementById('modal-title').innerText = activeProduct.title;
-            document.getElementById('modal-rating').innerHTML = `${activeProduct.rating} <i class="fas fa-star" style="font-size:10px;"></i>`;
-            document.getElementById('modal-mrp').innerText = `₹${activeProduct.mrp.toLocaleString('en-IN')}`;
-            document.getElementById('modal-price').innerText = `₹${activeProduct.price.toLocaleString('en-IN')}`;
-            document.getElementById('modal-specs').innerText = activeProduct.specs;
-            
-            document.getElementById('modal-add-btn').onclick = () => addToCart(activeProduct.title, activeProduct.price, activeProduct.image);
-
-            renderReviews();
-            document.getElementById('product-modal').style.display = 'flex';
-        }
-
-        function setRating(stars) {
-            const starIcons = document.querySelectorAll('#star-box i');
-            starIcons.forEach((star, index) => {
-                if(index < stars) star.classList.add('active');
-                else star.classList.remove('active');
-            });
-            showToast(`You rated this item ${stars} Stars!`);
-        }
-
-        function renderReviews() {
-            const list = document.getElementById('reviews-list');
-            document.getElementById('review-count').innerText = activeProduct.reviews.length;
-            let html = '';
-            activeProduct.reviews.forEach(rev => {
-                html += `<div class="review-card"><strong>Verified User:</strong> ${rev}</div>`;
-            });
-            list.innerHTML = html;
-        }
-
-        function postReview() {
-            const input = document.getElementById('review-input');
-            if(input.value.trim() !== '') {
-                activeProduct.reviews.push(input.value.trim());
-                input.value = '';
-                renderReviews();
-                showToast("Review submitted successfully!");
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('product-modal').style.display = 'none';
+        function resetFilters() {
+            document.querySelectorAll('input[name="cat"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[name="subcat"]').forEach(cb => cb.checked = false);
+            document.getElementById('fashion-sub-container').style.display = 'none';
+            document.getElementById('sort-select').value = 'default';
+            filterProducts();
         }
 
         function addToCart(title, price, image) {
             let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
             let existing = cart.find(item => item.title === title);
-            if(existing) existing.qty += 1;
-            else cart.push({ title, price, image, qty: 1 });
+            if(existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ title, price, image, qty: 1 });
+            }
             localStorage.setItem('shopSphereCart', JSON.stringify(cart));
-            updateCartCount();
             showToast(`"${title}" added to cart!`);
         }
 
@@ -700,21 +541,17 @@
                 localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
                 showToast(`"${title}" added to wishlist!`);
             } else {
-                showToast(`"${title}" is in your wishlist.`);
+                showToast(`"${title}" is already in your wishlist.`);
             }
-        }
-
-        function updateCartCount() {
-            let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
-            let totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
-            document.getElementById('bottom-cart-count').innerText = totalQty;
         }
 
         function showToast(message) {
             const toast = document.getElementById('toast-notification');
             document.getElementById('toast-message').innerText = message;
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
     </script>
 </body>
