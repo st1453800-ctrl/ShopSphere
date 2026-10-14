@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog & Fashion Subcategories - ShopSphere</title>
-    <meta name="description" content="Browse and filter electronics, fashion t-shirts, pants, shoes, and gadgets on ShopSphere.">
-    <!-- FontAwesome Icons -->
+    <title>Product Catalog - ShopSphere</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -26,7 +24,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Header Styling */
         header {
             background-color: var(--primary-blue);
             color: white;
@@ -45,12 +42,9 @@
             font-weight: bold;
             font-style: italic;
             cursor: pointer;
-            letter-spacing: 1px;
         }
 
-        .logo span {
-            color: var(--secondary-orange);
-        }
+        .logo span { color: var(--secondary-orange); }
 
         .nav-links {
             display: flex;
@@ -63,37 +57,28 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .nav-link:hover {
-            color: var(--secondary-orange);
-        }
-
-        /* Catalog Layout */
         .catalog-container {
-            max-width: 1200px;
-            margin: 30px auto;
+            max-width: 1240px;
+            margin: 25px auto;
             padding: 0 15px;
             display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 25px;
+            grid-template-columns: 260px 1fr;
+            gap: 20px;
         }
 
         @media(max-width: 768px) {
-            .catalog-container {
-                grid-template-columns: 1fr;
-            }
+            .catalog-container { grid-template-columns: 1fr; }
         }
 
-        /* Sidebar Filters */
         .filter-sidebar {
             background: white;
             border-radius: 8px;
-            padding: 20px;
+            padding: 18px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             height: fit-content;
         }
@@ -101,26 +86,11 @@
         .filter-title {
             font-size: 16px;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-bottom: 1px solid #f0f0f0;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter-group {
-            margin-bottom: 20px;
-        }
-
-        .filter-group label.group-heading {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .checkbox-label {
@@ -131,44 +101,47 @@
             margin-bottom: 8px;
             cursor: pointer;
             color: #444;
-            font-weight: 500;
         }
 
         .sub-category-box {
-            margin-left: 20px;
+            margin-left: 18px;
             padding-left: 10px;
-            border-left: 2px solid #e0e0e0;
-            margin-top: 8px;
-            margin-bottom: 12px;
+            border-left: 2px solid #2874f0;
+            margin-top: 6px;
+            margin-bottom: 10px;
             display: none;
         }
 
-        .filter-group select {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        /* Catalog Content Area */
         .catalog-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             background: white;
             padding: 15px 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Product Grid */
+        .section-title-bar {
+            background: #ffffff;
+            padding: 12px 18px;
+            border-left: 5px solid var(--primary-blue);
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin: 25px 0 15px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 16px;
         }
 
         .product-card {
@@ -180,38 +153,30 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
 
         .product-image {
             width: 100%;
-            height: 190px;
+            height: 180px;
             object-fit: cover;
             cursor: pointer;
         }
 
-        .product-info {
-            padding: 15px;
-        }
+        .product-info { padding: 12px; }
 
         .product-title {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             margin-bottom: 6px;
             color: var(--text-dark);
-            cursor: pointer;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        .product-title:hover {
-            color: var(--primary-blue);
         }
 
         .rating-badge {
@@ -223,70 +188,56 @@
             padding: 2px 6px;
             border-radius: 3px;
             font-weight: bold;
-            margin-bottom: 8px;
             gap: 3px;
+            margin-bottom: 6px;
         }
 
         .product-price {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--success-green);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
-        .btn-row {
-            display: flex;
-            gap: 8px;
-        }
+        .btn-row { display: flex; gap: 6px; }
 
         .btn-add-cart {
             flex: 1;
             background-color: var(--secondary-orange);
             color: white;
             border: none;
-            padding: 9px;
+            padding: 8px;
             font-weight: 600;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .btn-add-cart:hover {
-            background-color: var(--accent-red);
+            font-size: 13px;
         }
 
         .btn-wishlist {
             background: #eee;
             border: none;
-            padding: 9px 12px;
+            padding: 8px 10px;
             border-radius: 4px;
             cursor: pointer;
             color: #555;
         }
 
-        .btn-wishlist:hover {
-            color: var(--accent-red);
-        }
-
-        /* Toast Notification */
         #toast-notification {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 25px;
+            right: 25px;
             background: #212121;
             color: white;
-            padding: 12px 24px;
+            padding: 12px 20px;
             border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             font-size: 14px;
-            font-weight: 500;
             z-index: 9999;
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.3s, transform 0.3s;
+            transition: all 0.3s ease;
             pointer-events: none;
         }
 
@@ -294,20 +245,12 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        #toast-notification i {
-            color: #2ed573;
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
-        <div class="logo" onclick="window.location.href='index.html'">
-            Shop<span>Sphere</span>
-        </div>
+        <div class="logo" onclick="window.location.href='index.html'">Shop<span>Sphere</span></div>
         <div class="nav-links">
             <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
             <a class="nav-link" href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
@@ -315,9 +258,7 @@
         </div>
     </header>
 
-    <!-- Catalog Container -->
     <div class="catalog-container">
-        
         <!-- Sidebar Filters -->
         <div class="filter-sidebar">
             <div class="filter-title">
@@ -325,32 +266,23 @@
                 <span style="font-size: 12px; color: var(--primary-blue); cursor: pointer;" onclick="resetFilters()">Clear All</span>
             </div>
             
-            <div class="filter-group">
-                <label class="group-heading">Categories</label>
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 8px;">CATEGORIES</label>
                 
                 <label class="checkbox-label">
                     <input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets
                 </label>
                 
-                <!-- Fashion Main Category with Sequential Sub-categories -->
                 <label class="checkbox-label">
                     <input type="checkbox" name="cat" value="fashion" id="fashion-checkbox" onchange="toggleFashionSubcategories(); filterProducts();"> Fashion & Apparel
                 </label>
 
-                <!-- Sub-categories List -->
+                <!-- Subcategories -->
                 <div class="sub-category-box" id="fashion-sub-container">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes & Footwear
-                    </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets & Hoodies
-                    </label>
+                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts (10)</label>
+                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans</label>
+                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes</label>
+                    <label class="checkbox-label"><input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets</label>
                 </div>
 
                 <label class="checkbox-label">
@@ -361,13 +293,12 @@
                 </label>
             </div>
 
-            <div class="filter-group">
-                <label class="group-heading">Sort By Price</label>
-                <select id="sort-select" onchange="filterProducts()">
+            <div>
+                <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 8px;">SORT BY PRICE</label>
+                <select id="sort-select" onchange="filterProducts()" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
                     <option value="default">Relevance / Popularity</option>
                     <option value="low-high">Price: Low to High</option>
                     <option value="high-low">Price: High to Low</option>
-                    <option value="rating">Customer Ratings</option>
                 </select>
             </div>
         </div>
@@ -375,35 +306,51 @@
         <!-- Catalog Product Grid Area -->
         <div>
             <div class="catalog-header">
-                <div>Showing <strong id="product-count">0</strong> products available in catalog</div>
-                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Quality Verified</div>
+                <div>Showing <strong id="product-count">0</strong> products available</div>
+                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Verified Quality</div>
             </div>
 
-            <div class="product-grid" id="catalog-grid">
-                <!-- Dynamically populated via JS -->
+            <!-- Separated Container Sections -->
+            <div id="catalog-grid-sections">
+                <!-- Dynamically Rendered by JS into Separate Category Blocks -->
             </div>
         </div>
-
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast-notification">
-        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-check-circle" style="color:#2ed573;"></i>
         <span id="toast-message">Action completed successfully!</span>
     </div>
 
-    <!-- Catalog Management Logic -->
     <script>
         const masterProducts = [
-            { id: 1, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, title: "Vintage Mirrorless Camera", category: "electronics", subcat: "none", price: 45999, rating: 4.8, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" },
-            { id: 5, title: "Casual Cotton Graphic T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
-            { id: 6, title: "Classic Slim Fit Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
-            { id: 7, title: "Winter Warm Fleece Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
-            { id: 8, title: "Portable Waterproof Speaker", category: "appliances", subcat: "none", price: 1799, rating: 4.5, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80" },
-            { id: 9, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
+            // 10 T-SHIRTS
+            { id: 101, title: "Classic Crewneck Black T-Shirt", category: "fashion", subcat: "tshirt", price: 499, rating: 4.4, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
+            { id: 102, title: "Pure Cotton Solid White Tee", category: "fashion", subcat: "tshirt", price: 599, rating: 4.5, image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" },
+            { id: 103, title: "Graphic Printed Casual T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.2, image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=500&q=80" },
+            { id: 104, title: "Oversized Vintage Navy Tee", category: "fashion", subcat: "tshirt", price: 799, rating: 4.6, image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=500&q=80" },
+            { id: 105, title: "Striped Summer Cotton T-Shirt", category: "fashion", subcat: "tshirt", price: 549, rating: 4.3, image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=500&q=80" },
+            { id: 106, title: "Athletic Quick-Dry Sport T-Shirt", category: "fashion", subcat: "tshirt", price: 649, rating: 4.7, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=500&q=80" },
+            { id: 107, title: "Slim Fit Collar Polo T-Shirt", category: "fashion", subcat: "tshirt", price: 899, rating: 4.4, image: "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=500&q=80" },
+            { id: 108, title: "Henley Neck Olive Green Tee", category: "fashion", subcat: "tshirt", price: 749, rating: 4.3, image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=500&q=80" },
+            { id: 109, title: "Minimalist Gray V-Neck T-Shirt", category: "fashion", subcat: "tshirt", price: 499, rating: 4.1, image: "https://images.unsplash.com/photo-1618354691229-88d47f285158?auto=format&fit=crop&w=500&q=80" },
+            { id: 110, title: "Urban Streetwear Oversized Tee", category: "fashion", subcat: "tshirt", price: 999, rating: 4.8, image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=500&q=80" },
+
+            // PANTS & JEANS
+            { id: 201, title: "Classic Slim Fit Blue Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
+            { id: 202, title: "Black Casual Cotton Chino Pants", category: "fashion", subcat: "pants", price: 1299, rating: 4.4, image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=500&q=80" },
+
+            // SHOES
+            { id: 301, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
+            { id: 302, title: "White Urban Casual Sneakers", category: "fashion", subcat: "shoes", price: 2299, rating: 4.5, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=500&q=80" },
+
+            // JACKETS
+            { id: 401, title: "Winter Fleece Warm Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
+
+            // ELECTRONICS & MOBILES
+            { id: 501, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+            { id: 502, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
+            { id: 601, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -430,7 +377,6 @@
                 subContainer.style.display = 'block';
             } else {
                 subContainer.style.display = 'none';
-                // Uncheck subcategories when main category is unchecked
                 document.querySelectorAll('input[name="subcat"]').forEach(sub => sub.checked = false);
             }
         }
@@ -441,56 +387,74 @@
             const sortVal = document.getElementById('sort-select').value;
 
             let filtered = masterProducts.filter(p => {
-                // Category match check
                 const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-                
-                // If fashion is selected and subcategories are checked, filter strictly by subcategory
                 if (selectedCategories.includes('fashion') && selectedSubcategories.length > 0) {
                     return matchesCategory && selectedSubcategories.includes(p.subcat);
                 }
-
                 return matchesCategory;
             });
 
-            // Sorting logic
-            if(sortVal === 'low-high') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if(sortVal === 'high-low') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else if(sortVal === 'rating') {
-                filtered.sort((a, b) => b.rating - a.rating);
-            }
+            if(sortVal === 'low-high') filtered.sort((a, b) => a.price - b.price);
+            else if(sortVal === 'high-low') filtered.sort((a, b) => b.price - a.price);
 
-            renderCatalog(filtered);
+            renderCategorizedSections(filtered);
         }
 
-        function renderCatalog(products) {
-            const container = document.getElementById('catalog-grid');
+        function renderCategorizedSections(products) {
+            const mainContainer = document.getElementById('catalog-grid-sections');
             document.getElementById('product-count').innerText = products.length;
 
             if(products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found matching criteria.</h3><p style="color:#777; font-size:14px;">Try selecting a different sub-category or clearing filters.</p></div>`;
+                mainContainer.innerHTML = `<div style="text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found.</h3></div>`;
                 return;
             }
 
-            let html = '';
+            // Group products into separate categories/subcategories
+            const groups = {};
             products.forEach(p => {
+                let groupName = p.category.toUpperCase();
+                if(p.subcat === 'tshirt') groupName = "👕 T-SHIRTS COLLECTION";
+                else if(p.subcat === 'pants') groupName = "👖 PANTS & JEANS";
+                else if(p.subcat === 'shoes') groupName = "👟 SHOES & FOOTWEAR";
+                else if(p.subcat === 'jackets') groupName = "🧥 JACKETS & HOODIES";
+                else if(p.category === 'electronics') groupName = "🎧 ELECTRONICS & GADGETS";
+                else if(p.category === 'mobiles') groupName = "📱 MOBILE PHONES";
+
+                if(!groups[groupName]) groups[groupName] = [];
+                groups[groupName].push(p);
+            });
+
+            let html = '';
+            for (const [groupTitle, groupItems] of Object.entries(groups)) {
                 html += `
-                    <div class="product-card">
-                        <img src="${p.image}" class="product-image" alt="${p.title}" onclick="window.location.href='product-detail.html'">
-                        <div class="product-info">
-                            <div class="product-title" onclick="window.location.href='product-detail.html'">${p.title}</div>
-                            <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
-                            <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
-                            <div class="btn-row">
-                                <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
-                                <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
+                    <div class="section-title-bar">
+                        <span>${groupTitle}</span>
+                        <span style="font-size:13px; font-weight:normal; color:#666;">${groupItems.length} items</span>
+                    </div>
+                    <div class="product-grid">
+                `;
+
+                groupItems.forEach(p => {
+                    html += `
+                        <div class="product-card">
+                            <img src="${p.image}" class="product-image" alt="${p.title}">
+                            <div class="product-info">
+                                <div class="product-title">${p.title}</div>
+                                <div class="rating-badge">${p.rating} <i class="fas fa-star" style="font-size:9px;"></i></div>
+                                <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
+                                <div class="btn-row">
+                                    <button class="btn-add-cart" onclick="addToCart('${p.title}', ${p.price}, '${p.image}')">Add to Cart</button>
+                                    <button class="btn-wishlist" onclick="toggleWishlist('${p.title}')"><i class="fas fa-heart"></i></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
+                    `;
+                });
+
+                html += `</div>`;
+            }
+
+            mainContainer.innerHTML = html;
         }
 
         function resetFilters() {
@@ -504,11 +468,8 @@
         function addToCart(title, price, image) {
             let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
             let existing = cart.find(item => item.title === title);
-            if(existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ title, price, image, qty: 1 });
-            }
+            if(existing) existing.qty += 1;
+            else cart.push({ title, price, image, qty: 1 });
             localStorage.setItem('shopSphereCart', JSON.stringify(cart));
             showToast(`"${title}" added to cart!`);
         }
@@ -520,7 +481,7 @@
                 localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
                 showToast(`"${title}" added to wishlist!`);
             } else {
-                showToast(`"${title}" is already in your wishlist.`);
+                showToast(`"${title}" is in your wishlist.`);
             }
         }
 
@@ -528,9 +489,7 @@
             const toast = document.getElementById('toast-notification');
             document.getElementById('toast-message').innerText = message;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
     </script>
 </body>
