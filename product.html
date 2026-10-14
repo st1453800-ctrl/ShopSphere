@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog - ShopSphere</title>
-    <meta name="description" content="Browse and filter electronics, fashion, and gadgets on ShopSphere catalog.">
+    <title>Product Catalog & Fashion Subcategories - ShopSphere</title>
+    <meta name="description" content="Browse and filter electronics, fashion t-shirts, pants, shoes, and gadgets on ShopSphere.">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- External Global Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
     <style>
         :root {
             --primary-blue: #2874f0;
@@ -81,7 +79,7 @@
             margin: 30px auto;
             padding: 0 15px;
             display: grid;
-            grid-template-columns: 260px 1fr;
+            grid-template-columns: 280px 1fr;
             gap: 25px;
         }
 
@@ -115,21 +113,14 @@
             margin-bottom: 20px;
         }
 
-        .filter-group label {
+        .filter-group label.group-heading {
             display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #555;
-        }
-
-        .filter-group select, .filter-group input {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
             font-size: 14px;
-            outline: none;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .checkbox-label {
@@ -137,8 +128,28 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             cursor: pointer;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .sub-category-box {
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 2px solid #e0e0e0;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
         }
 
         /* Catalog Content Area */
@@ -315,15 +326,43 @@
             </div>
             
             <div class="filter-group">
-                <label>Categories</label>
-                <label class="checkbox-label"><input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets</label>
-                <label class="checkbox-label"><input type="checkbox" name="cat" value="fashion" onchange="filterProducts()"> Fashion & Apparel</label>
-                <label class="checkbox-label"><input type="checkbox" name="cat" value="appliances" onchange="filterProducts()"> Home Appliances</label>
-                <label class="checkbox-label"><input type="checkbox" name="cat" value="mobiles" onchange="filterProducts()"> Mobile Phones</label>
+                <label class="group-heading">Categories</label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="electronics" onchange="filterProducts()"> Electronics & Gadgets
+                </label>
+                
+                <!-- Fashion Main Category with Sequential Sub-categories -->
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="fashion" id="fashion-checkbox" onchange="toggleFashionSubcategories(); filterProducts();"> Fashion & Apparel
+                </label>
+
+                <!-- Sub-categories List -->
+                <div class="sub-category-box" id="fashion-sub-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="tshirt" onchange="filterProducts()"> 👕 T-Shirts
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="pants" onchange="filterProducts()"> 👖 Pants & Jeans
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="shoes" onchange="filterProducts()"> 👟 Shoes & Footwear
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="subcat" value="jackets" onchange="filterProducts()"> 🧥 Jackets & Hoodies
+                    </label>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="appliances" onchange="filterProducts()"> Home Appliances
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="cat" value="mobiles" onchange="filterProducts()"> Mobile Phones
+                </label>
             </div>
 
             <div class="filter-group">
-                <label>Sort By Price</label>
+                <label class="group-heading">Sort By Price</label>
                 <select id="sort-select" onchange="filterProducts()">
                     <option value="default">Relevance / Popularity</option>
                     <option value="low-high">Price: Low to High</option>
@@ -337,7 +376,7 @@
         <div>
             <div class="catalog-header">
                 <div>Showing <strong id="product-count">0</strong> products available in catalog</div>
-                <div style="font-size: 13px; color: var(--text-light);">Guaranteed BCA Quality</div>
+                <div style="font-size: 13px; color: var(--text-light);">ShopSphere Quality Verified</div>
             </div>
 
             <div class="product-grid" id="catalog-grid">
@@ -356,39 +395,64 @@
     <!-- Catalog Management Logic -->
     <script>
         const masterProducts = [
-            { id: 1, title: "Minimalist Smart Watch", category: "electronics", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
-            { id: 2, title: "Wireless Bass Headphones", category: "electronics", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
-            { id: 3, title: "Pro Athletic Running Shoes", category: "fashion", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
-            { id: 4, title: "Vintage Mirrorless Camera", category: "electronics", price: 45999, rating: 4.8, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" },
-            { id: 5, title: "Ultra Fitness Smart Band", category: "electronics", price: 1999, rating: 4.3, image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80" },
-            { id: 6, title: "RGB Gaming Headset", category: "electronics", price: 2499, rating: 4.7, image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500&q=80" },
-            { id: 7, title: "Portable Waterproof Speaker", category: "appliances", price: 1799, rating: 4.5, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80" },
-            { id: 8, title: "Flagship 5G Smartphone", category: "mobiles", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
+            { id: 1, title: "Minimalist Smart Watch", category: "electronics", subcat: "none", price: 2999, rating: 4.4, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" },
+            { id: 2, title: "Wireless Bass Headphones", category: "electronics", subcat: "none", price: 1499, rating: 4.2, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" },
+            { id: 3, title: "Pro Athletic Running Shoes", category: "fashion", subcat: "shoes", price: 3499, rating: 4.6, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=500&q=80" },
+            { id: 4, title: "Vintage Mirrorless Camera", category: "electronics", subcat: "none", price: 45999, rating: 4.8, image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" },
+            { id: 5, title: "Casual Cotton Graphic T-Shirt", category: "fashion", subcat: "tshirt", price: 699, rating: 4.3, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=500&q=80" },
+            { id: 6, title: "Classic Slim Fit Denim Jeans", category: "fashion", subcat: "pants", price: 1499, rating: 4.5, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80" },
+            { id: 7, title: "Winter Warm Fleece Hoodie", category: "fashion", subcat: "jackets", price: 1899, rating: 4.7, image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=500&q=80" },
+            { id: 8, title: "Portable Waterproof Speaker", category: "appliances", subcat: "none", price: 1799, rating: 4.5, image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=500&q=80" },
+            { id: 9, title: "Flagship 5G Smartphone", category: "mobiles", subcat: "none", price: 28999, rating: 4.8, image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80" }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Check URL parameters for category or search filter
             const params = new URLSearchParams(window.location.search);
             const catParam = params.get('category');
             if(catParam) {
                 const checkboxes = document.querySelectorAll('input[name="cat"]');
                 checkboxes.forEach(cb => {
-                    if(cb.value === catParam) cb.checked = true;
+                    if(cb.value === catParam) {
+                        cb.checked = true;
+                        if(catParam === 'fashion') {
+                            document.getElementById('fashion-sub-container').style.display = 'block';
+                        }
+                    }
                 });
             }
             filterProducts();
         });
 
+        function toggleFashionSubcategories() {
+            const fashionCheckbox = document.getElementById('fashion-checkbox');
+            const subContainer = document.getElementById('fashion-sub-container');
+            if (fashionCheckbox.checked) {
+                subContainer.style.display = 'block';
+            } else {
+                subContainer.style.display = 'none';
+                // Uncheck subcategories when main category is unchecked
+                document.querySelectorAll('input[name="subcat"]').forEach(sub => sub.checked = false);
+            }
+        }
+
         function filterProducts() {
             const selectedCategories = Array.from(document.querySelectorAll('input[name="cat"]:checked')).map(cb => cb.value);
+            const selectedSubcategories = Array.from(document.querySelectorAll('input[name="subcat"]:checked')).map(cb => cb.value);
             const sortVal = document.getElementById('sort-select').value;
 
             let filtered = masterProducts.filter(p => {
-                if(selectedCategories.length === 0) return true;
-                return selectedCategories.includes(p.category);
+                // Category match check
+                const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
+                
+                // If fashion is selected and subcategories are checked, filter strictly by subcategory
+                if (selectedCategories.includes('fashion') && selectedSubcategories.length > 0) {
+                    return matchesCategory && selectedSubcategories.includes(p.subcat);
+                }
+
+                return matchesCategory;
             });
 
-            // Sorting
+            // Sorting logic
             if(sortVal === 'low-high') {
                 filtered.sort((a, b) => a.price - b.price);
             } else if(sortVal === 'high-low') {
@@ -405,7 +469,7 @@
             document.getElementById('product-count').innerText = products.length;
 
             if(products.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found matching criteria.</h3></div>`;
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; background:white; border-radius:8px;"><h3>No products found matching criteria.</h3><p style="color:#777; font-size:14px;">Try selecting a different sub-category or clearing filters.</p></div>`;
                 return;
             }
 
@@ -431,6 +495,8 @@
 
         function resetFilters() {
             document.querySelectorAll('input[name="cat"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('input[name="subcat"]').forEach(cb => cb.checked = false);
+            document.getElementById('fashion-sub-container').style.display = 'none';
             document.getElementById('sort-select').value = 'default';
             filterProducts();
         }
