@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - ShopSphere</title>
+    <meta name="description" content="Complete your secure checkout on ShopSphere with multiple payment options and verified delivery.">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Global Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-blue: #2874f0;
+            --secondary-orange: #ff9f00;
+            --accent-red: #fb641b;
+            --success-green: #388e3c;
+            --bg-light: #f1f3f6;
+            --text-dark: #212121;
+            --text-light: #878787;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary-orange);
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        /* Checkout Container */
+        .checkout-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        @media(max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-box {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary-blue);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            padding: 11px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-blue);
+        }
+
+        /* Payment Option Selectors */
+        .payment-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .payment-option:hover {
+            background: #fafafa;
+            border-color: var(--primary-blue);
+        }
+
+        .payment-option input[type="radio"] {
+            accent-color: var(--primary-blue);
+            width: 18px;
+            height: 18px;
+        }
+
+        .payment-details-box {
+            display: none;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .payment-details-box.active {
+            display: block;
+        }
+
+        /* Price Breakdown Sidebar */
+        .price-row-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .price-row-item.total {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-dark);
+            border-top: 1px dashed #ccc;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .place-order-btn {
+            background-color: var(--secondary-orange);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .place-order-btn:hover {
+            background-color: var(--accent-red);
+        }
+
+        /* Toast Notification */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #212121;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #toast-notification i {
+            color: #2ed573;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" onclick="window.location.href='index.html'">
+            Shop<span>Sphere</span>
+        </div>
+        <div class="secure-badge">
+            <i class="fas fa-lock" style="color: #2ed573;"></i> 100% Secure Encrypted Checkout
+        </div>
+    </header>
+
+    <!-- Main Checkout Container -->
+    <main class="checkout-container">
+        
+        <!-- Left Column: Forms -->
+        <div>
+            <div class="card-box">
+                <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+                    <!-- Shipping Address Form -->
+                    <div class="section-title">
+                        <i class="fas fa-map-marker-alt"></i> 1. Delivery Shipping Address
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="shipName" required placeholder="Rahul Sharma" value="Rahul Sharma">
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" id="shipPhone" required placeholder="10-digit mobile number" value="9876543210">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Street Address / Area</label>
+                        <input type="text" id="shipAddress" required placeholder="BCA Web Technology Lab, LCB College Campus, Jalukbari" value="BCA Web Technology Lab, LCB College Campus, Jalukbari">
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" id="shipCity" required placeholder="Guwahati" value="Guwahati">
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode (6 digits)</label>
+                            <input type="text" id="shipPincode" required maxlength="6" placeholder="781014" value="781014">
+                        </div>
+                    </div>
+
+                    <!-- Payment Gateway Options -->
+                    <div class="section-title" style="margin-top: 30px;">
+                        <i class="fas fa-credit-card"></i> 2. Select Payment Method
+                    </div>
+
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="UPI / QR Code" checked onclick="togglePaymentFields('upi')">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">UPI / QR Code (Google Pay, PhonePe, Paytm)</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Instant payment via secure BCA gateway</div>
+                        </div>
+                    </label>
+                    <div class="payment-details-box active" id="upi-box">
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>Enter UPI ID / VPA</label>
+                            <input type="text" placeholder="username@okhdfcbank" value="rahul@oksbi">
+                        </div>
+                    </div>
+
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="Credit / Debit Card" onclick="togglePaymentFields('card')">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">Credit / Debit / ATM Card</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Visa, Mastercard, RuPay & more</div>
+                        </div>
+                    </label>
+                    <div class="payment-details-box" id="card-box">
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" maxlength="19" placeholder="4532 •••• •••• 8912">
+                        </div>
+                        <div class="form-grid" style="margin-bottom:0;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label>Valid Thru (MM/YY)</label>
+                                <input type="text" maxlength="5" placeholder="12/28">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label>CVV</label>
+                                <input type="password" maxlength="3" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="Cash on Delivery (COD)" onclick="togglePaymentFields('cod')">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">Cash on Delivery (COD)</div>
+                            <div style="font-size: 12px; color: var(--text-light);">Pay cash at your doorstep upon delivery</div>
+                        </div>
+                    </label>
+                    <div class="payment-details-box" id="cod-box">
+                        <p style="font-size: 13px; color: var(--text-light); margin:0;">Pay conveniently with cash or UPI QR scanner presented by our delivery executive.</p>
+                    </div>
+
+                    <button type="submit" class="place-order-btn">Place Secure Order</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column: Price Summary Sidebar -->
+        <div>
+            <div class="card-box" style="height: fit-content;">
+                <div class="section-title" style="margin-bottom: 15px;">Order Summary</div>
+                
+                <div id="checkout-items-summary" style="margin-bottom: 15px; max-height: 200px; overflow-y: auto;">
+                    <!-- Populated via JS -->
+                </div>
+
+                <hr style="border:0; border-top:1px solid #f0f0f0; margin-bottom: 15px;">
+
+                <div class="price-row-item">
+                    <span>Total MRP</span>
+                    <span id="chk-mrp">₹0</span>
+                </div>
+                <div class="price-row-item">
+                    <span>Delivery Charges</span>
+                    <span style="color: var(--success-green);">FREE</span>
+                </div>
+                <div class="price-row-item total">
+                    <span>Final Payable</span>
+                    <span id="chk-total">₹0</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Order placed successfully!</span>
+    </div>
+
+    <!-- Checkout Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutSummary();
+        });
+
+        function renderCheckoutSummary() {
+            const cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
+            const container = document.getElementById('checkout-items-summary');
+
+            if (cart.length === 0) {
+                cart.push({ title: "Minimalist Smart Watch", price: 2999, qty: 1 });
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                let sub = item.price * item.qty;
+                total += sub;
+                html += `
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+                        <span>${item.title} (x${item.qty})</span>
+                        <strong style="color: var(--success-green);">₹${sub.toLocaleString('en-IN')}</strong>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('chk-mrp').innerText = `₹${Math.round(total * 1.3).toLocaleString('en-IN')}`;
+            document.getElementById('chk-total').innerText = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        function togglePaymentFields(method) {
+            document.getElementById('upi-box').classList.remove('active');
+            document.getElementById('card-box').classList.remove('active');
+            document.getElementById('cod-box').classList.remove('active');
+
+            if (method === 'upi') {
+                document.getElementById('upi-box').classList.add('active');
+            } else if (method === 'card') {
+                document.getElementById('card-box').classList.add('active');
+            } else if (method === 'cod') {
+                document.getElementById('cod-box').classList.add('active');
+            }
+        }
+
+        async function handlePlaceOrder(e) {
+            e.preventDefault();
+
+            // Validate Pincode
+            const pincode = document.getElementById('shipPincode').value;
+            if (pincode.length !== 6 || isNaN(pincode)) {
+                alert("Please enter a valid 6-digit Indian postal pincode.");
+                return;
+            }
+
+            // Generate Unique Order ID
+            const randomNum = Math.floor(10000 + Math.random() * 90000);
+            const orderId = `SS-2026-${randomNum}`;
+
+            const cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [{ title: "Minimalist Smart Watch", price: 2999, qty: 1 }];
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shippingAddress = `${document.getElementById('shipAddress').value}, ${document.getElementById('shipCity').value} - ${pincode} (Ph: ${document.getElementById('shipPhone').value})`;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            const userIdentifier = localStorage.getItem('userIdentifier') || localStorage.getItem('userEmail') || 'guest@shopsphere.com';
+
+            const orderData = {
+                orderId,
+                userIdentifier,
+                items: cart,
+                totalAmount,
+                shippingAddress,
+                paymentMethod,
+                status: 'Ordered & Confirmed'
+            };
+
+            try {
+                // Send order to Node.js & MongoDB backend
+                const response = await fetch('http://localhost:3000/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+                const result = await response.json();
+                console.log('Backend response:', result);
+            } catch (err) {
+                console.warn('Backend offline, saving locally...', err);
+            }
+
+            // Always save to localStorage as reliable backup
+            let orders = JSON.parse(localStorage.getItem('shopSphereOrders')) || [];
+            orders.unshift(orderData);
+            localStorage.setItem('shopSphereOrders', JSON.stringify(orders));
+
+            // Clear Cart
+            localStorage.removeItem('shopSphereCart');
+
+            showToast(`Order ${orderId} placed successfully!`);
+
+            setTimeout(() => {
+                window.location.href = 'orders.html';
+            }, 1800);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

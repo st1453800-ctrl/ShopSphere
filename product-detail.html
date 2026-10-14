@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - ShopSphere</title>
+    <meta name="description" content="View product specifications, verified customer reviews, and purchase securely on ShopSphere.">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Global Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-blue: #2874f0;
+            --secondary-orange: #ff9f00;
+            --accent-red: #fb641b;
+            --success-green: #388e3c;
+            --bg-light: #f1f3f6;
+            --text-dark: #212121;
+            --text-light: #878787;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-orange);
+        }
+
+        /* Product Detail Layout */
+        .pdp-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+        }
+
+        @media(max-width: 768px) {
+            .pdp-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-box {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        /* Image Gallery Section */
+        .gallery-main {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .thumbnail-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .thumb-img:hover, .thumb-img.active {
+            border-color: var(--primary-blue);
+        }
+
+        /* Product Details Info */
+        .product-title-pdp {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .rating-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--success-green);
+            color: white;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            gap: 4px;
+        }
+
+        .price-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .current-price {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--success-green);
+        }
+
+        .mrp-price {
+            font-size: 16px;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .discount-tag {
+            font-size: 15px;
+            color: var(--success-green);
+            font-weight: bold;
+        }
+
+        /* Variant Selectors */
+        .variant-section {
+            margin-bottom: 20px;
+        }
+
+        .variant-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .chip-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .variant-chip {
+            padding: 6px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .variant-chip.active {
+            border-color: var(--primary-blue);
+            background: #f4f8ff;
+            color: var(--primary-blue);
+        }
+
+        /* Pincode Checker */
+        .pincode-checker {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .pincode-checker input {
+            padding: 9px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            width: 160px;
+        }
+
+        .pincode-checker button {
+            background: #212121;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* Action Buttons */
+        .cta-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn-cart {
+            flex: 1;
+            background-color: var(--secondary-orange);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cart:hover {
+            background-color: var(--accent-red);
+        }
+
+        .btn-buy {
+            flex: 1;
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: #d54c0e;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            max-width: 1100px;
+            margin: 0 auto 40px auto;
+            padding: 0 15px;
+        }
+
+        .review-card {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 15px 0;
+        }
+
+        .review-card:last-child {
+            border-bottom: none;
+        }
+
+        /* Toast Notification */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #212121;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #toast-notification i {
+            color: #2ed573;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" onclick="window.location.href='index.html'">
+            Shop<span>Sphere</span>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="products.html"><i class="fas fa-th-large"></i> Catalog</a>
+            <a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </div>
+    </header>
+
+    <!-- Product Detail Container -->
+    <main class="pdp-container">
+        
+        <!-- Left: Image Gallery -->
+        <div class="card-box">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" id="mainImage" class="gallery-main" alt="Smart Watch">
+            <div class="thumbnail-row">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80" class="thumb-img active" onclick="changeImage(this)">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=200&q=80" class="thumb-img" onclick="changeImage(this)">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=200&q=80" class="thumb-img" onclick="changeImage(this)">
+            </div>
+        </div>
+
+        <!-- Right: Product Information & Actions -->
+        <div class="card-box">
+            <h1 class="product-title-pdp">Minimalist Smart Watch Pro</h1>
+            <div class="rating-badge">4.4 <i class="fas fa-star" style="font-size:10px;"></i> (1,428 Verified Ratings)</div>
+            
+            <div class="price-box">
+                <span class="current-price">₹2,999</span>
+                <span class="mrp-price">₹4,999</span>
+                <span class="discount-tag">40% off</span>
+            </div>
+
+            <p style="color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+                Sleek fitness tracking smartwatch equipped with AMOLED HD display, real-time heart rate monitor, SpO2 blood oxygen sensor, IP68 water resistance, and 7-day extended battery life.
+            </p>
+
+            <!-- Variant Chips -->
+            <div class="variant-section">
+                <span class="variant-label">Select Color Edition</span>
+                <div class="chip-row">
+                    <button class="variant-chip active" onclick="selectVariant(this)">Matte Black</button>
+                    <button class="variant-chip" onclick="selectVariant(this)">Silver Steel</button>
+                    <button class="variant-chip" onclick="selectVariant(this)">Rose Gold</button>
+                </div>
+            </div>
+
+            <!-- Pincode Checker -->
+            <div class="variant-section">
+                <span class="variant-label">Check Delivery & Services</span>
+                <div class="pincode-checker">
+                    <input type="text" id="pincodeInput" maxlength="6" placeholder="Enter Pincode">
+                    <button onclick="checkPincode()">Check</button>
+                </div>
+                <div id="pincodeResult" style="font-size: 13px; color: var(--success-green); font-weight: 600;"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="cta-row">
+                <button class="btn-cart" onclick="addCurrentToCart()"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                <a href="checkout.html" class="btn-buy" onclick="addCurrentToCart()"><i class="fas fa-bolt"></i> Buy Now</a>
+            </div>
+
+            <div style="font-size: 12px; color: var(--text-light); border-top: 1px solid #f0f0f0; padding-top: 15px;">
+                <i class="fas fa-shield-alt" style="color: var(--primary-blue);"></i> 7 Days Replacement Policy &bull; 1 Year BCA Campus Warranty &bull; Cash on Delivery available
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Customer Reviews Section -->
+    <section class="reviews-section">
+        <div class="card-box">
+            <h3 style="margin-bottom: 15px; font-size: 18px;">Customer Ratings & Reviews</h3>
+            
+            <div class="review-card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <span style="background: var(--success-green); color: white; font-size: 11px; padding: 2px 6px; border-radius: 3px; font-weight: bold;">5 <i class="fas fa-star" style="font-size:8px;"></i></span>
+                    <strong style="font-size: 14px;">Amazing battery life!</strong>
+                </div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 5px;">The watch looks extremely premium and the battery easily lasts 6 days on a single charge. Highly recommended!</p>
+                <div style="font-size: 11px; color: var(--text-light);">Posted by Ankit Das, Guwahati &bull; 2 days ago</div>
+            </div>
+
+            <div class="review-card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <span style="background: var(--success-green); color: white; font-size: 11px; padding: 2px 6px; border-radius: 3px; font-weight: bold;">4 <i class="fas fa-star" style="font-size:8px;"></i></span>
+                    <strong style="font-size: 14px;">Good value for money</strong>
+                </div>
+                <p style="font-size: 13px; color: #555; margin-bottom: 5px;">Build quality is solid for the price. Delivery was super fast via ShopSphere express.</p>
+                <div style="font-size: 11px; color: var(--text-light);">Posted by Priyanka Bora, Jorhat &bull; 1 week ago</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Action completed successfully!</span>
+    </div>
+
+    <!-- PDP Logic Script -->
+    <script>
+        function changeImage(element) {
+            document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('mainImage').src = element.src;
+        }
+
+        function selectVariant(element) {
+            document.querySelectorAll('.variant-chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function checkPincode() {
+            const val = document.getElementById('pincodeInput').value;
+            const res = document.getElementById('pincodeResult');
+            if(val.length === 6 && !isNaN(val)) {
+                res.innerText = `✓ Delivery available by tomorrow, 4:00 PM. Free Delivery.`;
+            } else {
+                res.style.color = '#ff6161';
+                res.innerText = `Please enter a valid 6-digit pincode.`;
+            }
+        }
+
+        function addCurrentToCart() {
+            let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
+            let title = "Minimalist Smart Watch Pro";
+            let price = 2999;
+            let image = document.getElementById('mainImage').src;
+
+            let existing = cart.find(item => item.title === title);
+            if(existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ title, price, image, qty: 1 });
+            }
+            localStorage.setItem('shopSphereCart', JSON.stringify(cart));
+            showToast(`"Minimalist Smart Watch Pro" added to cart!`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

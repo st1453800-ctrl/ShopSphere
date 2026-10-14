@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details & Tracking - ShopSphere</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #2874f0;
+            --secondary-orange: #ff9f00;
+            --success-green: #388e3c;
+            --status-yellow: #f57c00;
+            --bg-light: #f1f3f6;
+            --text-dark: #212121;
+            --text-light: #878787;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Navigation Bar */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 3%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--secondary-orange);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-orange);
+        }
+
+        /* Full Width Container Layout */
+        .orders-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 0 25px;
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dark);
+        }
+
+        /* Full-Width Main Order Card */
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border-top: 6px solid var(--primary-blue);
+            box-sizing: border-box;
+        }
+
+        /* Top Tracking Header */
+        .order-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .order-id {
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 18px;
+        }
+
+        .order-status-badge {
+            background: #fff3e0;
+            color: var(--status-yellow);
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* SECTION BOX STYLING */
+        .detail-section {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-section h3 {
+            margin: 0 0 15px 0;
+            font-size: 15px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #e8e8e8;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 1. Product Details (Moved to Top) */
+        .product-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .product-img {
+            width: 85px;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        /* 2. Price Details Rows */
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .price-row.final {
+            font-weight: bold;
+            color: var(--text-dark);
+            font-size: 17px;
+            border-top: 1px dashed #ccc;
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        /* 3. Delivery Details Grid */
+        .delivery-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        @media(max-width: 768px) {
+            .delivery-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 4. Payment Mode Details */
+        .payment-mode-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cod-tag {
+            background: #e8f5e9;
+            color: var(--success-green);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Action Buttons Footer */
+        .order-actions-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-action {
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-action:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-cancel-order {
+            background: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-cancel-order:hover {
+            background: #ffcdd2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" onclick="window.location.href='index.html'">Shop<span>Sphere</span></div>
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </div>
+    </header>
+
+    <!-- Full Width Container -->
+    <div class="orders-container">
+        <h2 class="section-title"><i class="fas fa-receipt"></i> Order Details & Tracking</h2>
+        
+        <div class="order-card">
+            
+            <!-- Top Header & Tracking Status -->
+            <div class="order-header-top">
+                <div>
+                    <div class="order-id">Order ID: SS-2026-94812</div>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 3px;">Placed on: October 12, 2026</div>
+                </div>
+                <span class="order-status-badge"><i class="fas fa-truck"></i> Out for Delivery</span>
+            </div>
+
+            <!-- SECTION 1: Product Details (Now Placed at the Top) -->
+            <div class="detail-section">
+                <h3><i class="fas fa-box-open"></i> 1. Product Details</h3>
+                <div class="product-row">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=200&q=80" class="product-img" alt="Minimalist Smart Watch">
+                    <div style="flex: 1;">
+                        <div style="font-weight: bold; font-size: 16px; color: var(--text-dark);">Minimalist Smart Watch</div>
+                        <div style="font-size: 13px; color: var(--text-light); margin-top: 4px;">Quantity: 1 unit</div>
+                        <div style="font-size: 15px; font-weight: bold; color: var(--success-green); margin-top: 4px;">₹2,999</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: Price Breakdown -->
+            <div class="detail-section">
+                <h3><i class="fas fa-file-invoice-dollar"></i> 2. Price Breakdown</h3>
+                <div class="price-row">
+                    <span>List Price (MRP)</span>
+                    <span>₹3,899</span>
+                </div>
+                <div class="price-row">
+                    <span>Discount Applied</span>
+                    <span style="color: var(--success-green);">- ₹900</span>
+                </div>
+                <div class="price-row">
+                    <span>Delivery Charges</span>
+                    <span style="color: var(--success-green);">FREE</span>
+                </div>
+                <div class="price-row final">
+                    <span>Total Amount Paid / Payable</span>
+                    <span style="color: var(--success-green);">₹2,999</span>
+                </div>
+            </div>
+
+            <!-- SECTION 3: Delivery Details (Date, Time & Exact Place) -->
+            <div class="detail-section">
+                <h3><i class="fas fa-shipping-fast"></i> 3. Delivery Updates & Destination</h3>
+                <div class="delivery-info-grid">
+                    <div>
+                        <strong>Estimated Delivery Date:</strong><br>
+                        <span style="color: var(--primary-blue); font-weight: bold;">Today, Oct 14, 2026</span><br><br>
+                        <strong>Time Slot:</strong><br>
+                        <span>Expected by 04:00 PM</span>
+                    </div>
+                    <div>
+                        <strong>Delivery Address / Place:</strong><br>
+                        <span>BCA Web Technology Lab, LCB College Campus, Jalukbari, Guwahati - 781014</span><br><br>
+                        <strong>Delivery Partner:</strong><br>
+                        <span>ShopSphere Express Logistics</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Payment Mode Details -->
+            <div class="detail-section" style="margin-bottom: 0;">
+                <h3><i class="fas fa-wallet"></i> 4. Payment Mode</h3>
+                <div class="payment-mode-box">
+                    <div>
+                        <span class="cod-tag"><i class="fas fa-money-bill-wave"></i> Cash on Delivery (COD)</span>
+                        <div style="font-size: 13px; color: #666; margin-top: 6px;">Pay exact cash or scan QR code when the delivery executive arrives.</div>
+                    </div>
+                    <div style="text-align: right; font-size: 13px; color: var(--success-green); font-weight: bold;">
+                        <i class="fas fa-check-circle"></i> Verified Option
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action Buttons -->
+            <div class="order-actions-footer">
+                <button class="btn-action" onclick="alert('Invoice downloaded successfully for SS-2026-94812!')">
+                    <i class="fas fa-download"></i> Download Invoice
+                </button>
+                <button class="btn-cancel-order" onclick="alert('Order cancellation requested for SS-2026-94812.')">
+                    <i class="fas fa-times-circle"></i> Cancel Order
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

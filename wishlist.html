@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - ShopSphere</title>
+    <meta name="description" content="View and manage your saved wishlist products on ShopSphere.">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Global Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-blue: #2874f0;
+            --secondary-orange: #ff9f00;
+            --accent-red: #fb641b;
+            --success-green: #388e3c;
+            --bg-light: #f1f3f6;
+            --text-dark: #212121;
+            --text-light: #878787;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-orange);
+        }
+
+        /* Wishlist Container */
+        .wishlist-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success-green);
+            margin-bottom: 12px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-move-cart {
+            flex: 1;
+            background-color: var(--secondary-orange);
+            color: white;
+            border: none;
+            padding: 9px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-move-cart:hover {
+            background-color: var(--accent-red);
+        }
+
+        .btn-remove-wishlist {
+            background: #eee;
+            border: none;
+            padding: 9px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #ff6161;
+        }
+
+        .btn-remove-wishlist:hover {
+            background: #ff6161;
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .shop-now-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            font-weight: bold;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Toast Notification */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #212121;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #toast-notification i {
+            color: #2ed573;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo" onclick="window.location.href='index.html'">
+            Shop<span>Sphere</span>
+        </div>
+        <div class="nav-links">
+            <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a class="nav-link" href="products.html"><i class="fas fa-th-large"></i> Products</a>
+            <a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </div>
+    </header>
+
+    <!-- Wishlist Container -->
+    <div class="wishlist-container">
+        <h2 class="section-title">My Saved Wishlist</h2>
+        <div id="wishlist-grid-wrapper">
+            <!-- Dynamically populated via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Wishlist updated successfully!</span>
+    </div>
+
+    <!-- Wishlist Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishlist();
+        });
+
+        function getWishlist() {
+            return JSON.parse(localStorage.getItem('shopSphereWishlist')) || [];
+        }
+
+        function renderWishlist() {
+            const wishlist = getWishlist();
+            const container = document.getElementById('wishlist-grid-wrapper');
+
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-heart-broken"></i>
+                        <h3>Your Wishlist is Empty</h3>
+                        <p>Save items that you like to your wishlist and review them anytime.</p>
+                        <a href="products.html" class="shop-now-btn">Explore Catalog</a>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="product-grid">';
+            wishlist.forEach((title, index) => {
+                let defaultPrice = 2499; // Standard fallback price
+                html += `
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" alt="${title}" class="product-image">
+                        <div class="product-info">
+                            <div class="product-title">${title}</div>
+                            <div class="product-price">₹${defaultPrice.toLocaleString('en-IN')}</div>
+                            <div class="btn-row">
+                                <button class="btn-move-cart" onclick="moveToCart('${title}', ${defaultPrice}, ${index})">Move to Cart</button>
+                                <button class="btn-remove-wishlist" onclick="removeWishlistItem(${index})"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function removeWishlistItem(index) {
+            let wishlist = getWishlist();
+            wishlist.splice(index, 1);
+            localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
+            renderWishlist();
+            showToast("Item removed from wishlist.");
+        }
+
+        function moveToCart(title, price, index) {
+            // Add to cart
+            let cart = JSON.parse(localStorage.getItem('shopSphereCart')) || [];
+            let existing = cart.find(item => item.title === title);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ title, price, qty: 1 });
+            }
+            localStorage.setItem('shopSphereCart', JSON.stringify(cart));
+
+            // Remove from wishlist
+            let wishlist = getWishlist();
+            wishlist.splice(index, 1);
+            localStorage.setItem('shopSphereWishlist', JSON.stringify(wishlist));
+
+            renderWishlist();
+            showToast(`"${title}" moved to cart!`);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ShopSphere</title>
+    <meta name="description" content="Log in to your ShopSphere account using email or mobile number.">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Global Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-blue: #2874f0;
+            --secondary-orange: #ff9f00;
+            --accent-red: #fb641b;
+            --success-green: #388e3c;
+            --bg-light: #f1f3f6;
+            --text-dark: #212121;
+            --text-light: #878787;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .auth-container {
+            display: flex;
+            background: white;
+            width: 850px;
+            height: 520px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        .auth-sidebar {
+            background: linear-gradient(135deg, #172337, var(--primary-blue));
+            color: white;
+            padding: 40px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .auth-sidebar h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .auth-sidebar p {
+            font-size: 15px;
+            color: #d0e1fd;
+            line-height: 1.6;
+        }
+
+        .auth-form-box {
+            padding: 40px;
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-form-box h2 {
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-blue);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 38px;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #e55a15;
+        }
+
+        .auth-footer-text {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .auth-footer-text a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home-link {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-home-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast Notification */
+        #toast-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #212121;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #toast-notification i {
+            color: #2ed573;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <!-- Left Sidebar -->
+        <div class="auth-sidebar">
+            <div>
+                <a href="index.html" style="color:white; text-decoration:none;"><h2 style="margin-bottom:5px;">ShopSphere</h2></a>
+                <p>Get access to your Orders, Wishlist, Recommendations and exclusive BCA student offers.</p>
+            </div>
+            <div style="font-size: 54px; color: rgba(255,255,255,0.15);">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div style="font-size: 12px; color: #d0e1fd;">&copy; 2026 ShopSphere Inc. All rights reserved.</div>
+        </div>
+
+        <!-- Right Form Box -->
+        <div class="auth-form-box">
+            <a href="index.html" class="back-home-link"><i class="fas fa-arrow-left"></i> Back to Storefront</a>
+            <h2>Login to Your Account</h2>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Enter Email Address or Mobile Number</label>
+                    <input type="text" id="loginIdentifier" required placeholder="user@shopsphere.com or 9876543210" value="9876543210">
+                </div>
+                <div class="input-group">
+                    <label>Enter Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" value="password123">
+                    <i class="fas fa-eye password-toggle" id="togglePass" onclick="togglePasswordVisibility()"></i>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+
+            <div class="auth-footer-text">
+                New to ShopSphere? <a href="signup.html">Create an account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Login successful!</span>
+    </div>
+
+    <!-- Login Logic -->
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const identifier = document.getElementById('loginIdentifier').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters.");
+                return;
+            }
+
+            // Save session state to localStorage
+            localStorage.setItem('shopSphereUser', identifier);
+            if (!localStorage.getItem('shopSphereUserName')) {
+                localStorage.setItem('shopSphereUserName', identifier.includes('@') ? identifier.split('@')[0] : 'User_' + identifier.slice(-4));
+            }
+
+            showToast("Login successful! Redirecting to storefront...");
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('loginPassword');
+            const toggleIcon = document.getElementById('togglePass');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
