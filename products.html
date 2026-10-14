@@ -124,15 +124,19 @@
 
         /* 3. MAIN CATALOG LAYOUT */
 
-        .catalog-container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 5%;
-            display: grid;
-            grid-template-columns: 260px minmax(0, 1fr);
-            gap: 25px;
-            align-items: start;
-        }
+        
+
+.catalog-container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 4%;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+
 
         .filter-sidebar {
             background: var(--white);
@@ -233,11 +237,13 @@
 
         /* 5. PRODUCT CARDS */
 
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-        }
+        
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
 
         .product-card {
             background: white;
@@ -780,9 +786,8 @@
                 new Date().getFullYear();
 
             const params = new URLSearchParams(window.location.search);
-            const categoryParam = params.get("category");
+            const categoryParam = (params.get("category") || "").toLowerCase().trim();
             const searchParam = params.get("search");
-
             if (categoryParam) {
                 const categoryCheckbox = document.querySelector(
                     `input[name="cat"][value="${CSS.escape(categoryParam)}"]`
