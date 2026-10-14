@@ -1310,15 +1310,31 @@
         <a href="index.html" aria-current="page">Home</a>
         <a href="products.html">All Products</a>
 
-        <div class="nav-dropdown">
-          <button type="button" aria-expanded="false">Electronics ▾</button>
-          <div class="mega-menu">
-            <a href="products.html?category=electronics">All Electronics</a>
-            <a href="products.html?category=electronics">Headphones</a>
-            <a href="products.html?category=electronics">Smart Devices</a>
-            <a href="products.html?category=electronics">Accessories</a>
-          </div>
-        </div>
+        ```html
+<div class="nav-dropdown">
+    <button type="button" aria-expanded="false">
+        Electronics ▾
+    </button>
+
+    <div class="mega-menu">
+        <a href="products.html?category=electronics">All Electronics</a>
+
+        <a href="products.html?category=electronics&search=headphones">Audio Devices</a>
+
+        <a href="products.html?category=electronics&search=smartphone">Mobile Devices</a>
+
+        <a href="products.html?category=electronics&search=laptop">Computers & Accessories</a>
+
+        <a href="products.html?category=electronics&search=camera">Cameras & Photography</a>
+
+        <a href="products.html?category=electronics&search=charger">Electronic Accessories</a>
+
+        <a href="products.html?category=electronics&search=gaming">Entertainment & Gaming</a>
+
+        <a href="products.html?category=electronics&search=kettle">Small Appliances</a>
+    </div>
+</div>
+```
 
         <div class="nav-dropdown">
           <button type="button" aria-expanded="false">Fashion ▾</button>
